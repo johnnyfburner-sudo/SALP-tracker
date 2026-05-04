@@ -1,0 +1,21 @@
+name: SEC Filing Tracker
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # 9am ET
+    - cron: '0 18 * * *'  # 1pm ET
+  workflow_dispatch:
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - run: python sec_tracker.py
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
