@@ -38,11 +38,6 @@ ACTION_TOPICS = [
     "write like a knowledgeable friend giving real advice — clear, direct, no jargon",
     "use the live prices provided — do not guess or use outdated prices",
 ]
-
-TICKERS_TO_PRICE = [
-    "CRWV", "CORZ", "IREN", "APLD", "NVDA", "AMD",
-    "SMCI", "RKLB", "IONQ", "QBTS", "MSTR", "CLBT"
-]
 # -------------------------------------------------------
 
 def load_seen():
@@ -97,6 +92,17 @@ def fetch_filing_text(accession):
         print(f"Could not fetch filing text: {e}")
     return combined_text or None, index_url
 
+def extract_tickers_from_filing(filing_text):
+    tickers = set()
+    matches = re.findall(r'\b([A-Z]{1,5})\b', filing_text)
+    ignore = {"THE", "AND", "FOR", "LLC", "INC", "LTD", "ETF", "SEC", "USD",
+              "AUM", "AGI", "AI", "LP", "NA", "DE", "CA", "NY", "OR", "PUT",
+              "CALL", "SHS", "COM", "CL", "TR", "NEW", "OLD", "II", "III"}
+    for m in matches:
+        if m not in ignore and len(m) >= 2:
+            tickers.add(m)
+    return list(tickers)
+
 def fetch_prices(tickers):
     prices = {}
     for ticker in tickers:
@@ -104,10 +110,12 @@ def fetch_prices(tickers):
             url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=1d"
             r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
             data = r.json()
-            price = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
-            prices[ticker] = f"${price:,.2f}"
+            result = data.get("chart", {}).get("result")
+            if result:
+                price = result[0]["meta"]["regularMarketPrice"]
+                prices[ticker] = f"${price:,.2f}"
         except:
-            prices[ticker] = "price unavailable"
+            pass
     return prices
 
 def summarize_with_claude(filing_text, form_type, prices_str=""):
@@ -134,7 +142,7 @@ SECTION 2 — POSITION CHANGES
 Topics to focus on:
 {position_str}
 
-Here are today's live prices for common AI/compute stocks — use these exact prices in Section 3, do not guess or use outdated numbers:
+Here are today's live prices for stocks found in this filing — use these exact prices in Section 3, do not guess or use outdated numbers:
 {prices_str}
 
 SECTION 3 — ACTIONABLE INSIGHTS FOR RETAIL INVESTORS
@@ -163,6 +171,7 @@ Write section 3 like a knowledgeable friend giving real advice — clear, direct
     return response.json()["content"][0]["text"]
 
 def send_alert(filing, summary, filing_url):
+    summary = re.sub(r'#+\s*', '', summary)
     parts = summary.split("SECTION 2")
     section1 = parts[0].replace("SECTION 1 — MACRO & PHILOSOPHY", "").strip() if parts else summary
     remainder = parts[1] if len(parts) > 1 else ""
@@ -268,9 +277,11 @@ def main():
     for filing in new_filings:
         print(f"New filing found: {filing['form']} on {filing['date']}")
         filing_text, filing_url = fetch_filing_text(filing["accession"])
-        prices = fetch_prices(TICKERS_TO_PRICE)
+        raw_tickers = extract_tickers_from_filing(filing_text or "")
+        prices = fetch_prices(raw_tickers)
+        prices = {k: v for k, v in prices.items() if v}
         prices_str = "\n".join(f"{t}: {p}" for t, p in prices.items())
-        print(f"Live prices fetched: {prices_str}")
+        print(f"Live prices fetched for: {', '.join(prices.keys())}")
         if filing_text:
             summary = summarize_with_claude(filing_text, filing['form'], prices_str)
         else:
