@@ -24,13 +24,11 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.6; min-height: 100vh; }
-
   .scanline {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
     pointer-events: none; z-index: 100;
   }
-
   header {
     border-bottom: 1px solid var(--amber);
     padding: 1.25rem 2rem;
@@ -45,36 +43,16 @@
   .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .last-update { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
-
   .main { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-
-  .card {
-    background: var(--bg2);
-    border: 0.5px solid var(--border-dim);
-    border-radius: 4px;
-    padding: 1.25rem;
-    overflow: hidden;
-  }
+  .card { background: var(--bg2); border: 0.5px solid var(--border-dim); border-radius: 4px; padding: 1.25rem; overflow: hidden; }
   .card.span2 { grid-column: span 2; }
   .card.span3 { grid-column: span 3; }
   .card.accent { border-color: var(--border); }
-
-  .card-label {
-    font-family: var(--mono); font-size: 10px; color: var(--amber);
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;
-    display: flex; align-items: center; justify-content: space-between;
-  }
+  .card-label { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
   .card-label span { color: var(--text-faint); font-size: 10px; }
-
   .stat-val { font-family: var(--mono); font-size: 28px; color: #fff; font-weight: 500; }
   .stat-sub { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: 4px; }
-
-  .position-row {
-    display: grid; grid-template-columns: 1fr auto auto auto;
-    gap: 8px; align-items: center;
-    padding: 8px 0; border-bottom: 0.5px solid var(--border-dim);
-    font-family: var(--mono); font-size: 12px;
-  }
+  .position-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; }
   .position-row:last-child { border-bottom: none; }
   .pos-ticker { color: var(--amber); font-weight: 500; }
   .pos-name { color: var(--text-dim); font-size: 11px; }
@@ -82,52 +60,31 @@
   .pos-pct { color: var(--text-dim); text-align: right; font-size: 11px; }
   .pos-bar-wrap { grid-column: span 4; height: 2px; background: var(--bg3); border-radius: 1px; margin-top: -4px; margin-bottom: 4px; }
   .pos-bar { height: 2px; background: var(--amber); border-radius: 1px; opacity: 0.5; }
-
-  .news-item {
-    padding: 10px 0; border-bottom: 0.5px solid var(--border-dim);
-    display: flex; flex-direction: column; gap: 4px;
-  }
+  .news-item { padding: 10px 0; border-bottom: 0.5px solid var(--border-dim); display: flex; flex-direction: column; gap: 4px; }
   .news-item:last-child { border-bottom: none; }
   .news-headline { font-size: 13px; color: var(--text); line-height: 1.4; }
   .news-headline a { color: var(--text); text-decoration: none; }
   .news-headline a:hover { color: var(--amber); }
   .news-meta { font-family: var(--mono); font-size: 10px; color: var(--text-faint); display: flex; gap: 12px; }
   .news-source { color: var(--amber); }
-
   .summary-text { font-size: 13px; line-height: 1.8; color: #bbb; border-left: 2px solid var(--amber); padding-left: 1rem; }
   .summary-section { margin-bottom: 1.5rem; }
   .summary-section-title { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 2px; margin-bottom: 8px; }
-
   .bullet { display: flex; gap: 8px; margin-bottom: 6px; font-size: 13px; color: #bbb; }
   .bullet-arrow { color: var(--amber); flex-shrink: 0; }
-
-  .filing-badge {
-    display: inline-block; font-family: var(--mono); font-size: 10px;
-    padding: 2px 8px; border: 0.5px solid var(--amber); color: var(--amber);
-    border-radius: 2px; letter-spacing: 1px;
-  }
-
+  .filing-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 8px; border: 0.5px solid var(--amber); color: var(--amber); border-radius: 2px; letter-spacing: 1px; }
   .loading { color: var(--text-faint); font-family: var(--mono); font-size: 12px; }
   .error-msg { color: var(--red); font-family: var(--mono); font-size: 11px; }
-
   .price-up { color: var(--green); }
   .price-down { color: var(--red); }
-
   .action-item { padding: 10px 0; border-bottom: 0.5px solid var(--border-dim); }
   .action-item:last-child { border-bottom: none; }
   .action-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 6px; border-radius: 2px; margin-bottom: 4px; }
   .badge-buy { background: rgba(76,175,125,0.15); color: var(--green); border: 0.5px solid rgba(76,175,125,0.3); }
   .badge-avoid { background: rgba(224,82,82,0.15); color: var(--red); border: 0.5px solid rgba(224,82,82,0.3); }
   .badge-watch { background: rgba(245,166,35,0.15); color: var(--amber); border: 0.5px solid rgba(245,166,35,0.3); }
-  .action-text { font-size: 12px; color: #bbb; line-height: 1.6; }
-
   .sec-link { color: var(--amber); text-decoration: none; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
   .sec-link:hover { text-decoration: underline; }
-
-  .tab-bar { display: flex; gap: 1px; margin-bottom: 1rem; }
-  .tab { font-family: var(--mono); font-size: 10px; padding: 4px 10px; cursor: pointer; color: var(--text-dim); border: 0.5px solid var(--border-dim); background: transparent; letter-spacing: 1px; }
-  .tab.active { background: var(--amber); color: #000; border-color: var(--amber); }
-
   @media (max-width: 900px) {
     .main { grid-template-columns: 1fr; padding: 1rem; }
     .card.span2, .card.span3 { grid-column: span 1; }
@@ -136,7 +93,6 @@
 </head>
 <body>
 <div class="scanline"></div>
-
 <header>
   <div class="logo-block">
     <span class="logo-sub">Mirror Fund Console</span>
@@ -147,57 +103,48 @@
     <div class="last-update" id="lastUpdate">Loading...</div>
   </div>
 </header>
-
 <div class="main">
-
   <div class="card accent">
     <div class="card-label">Total AUM (Disclosed)</div>
     <div class="stat-val" id="totalAum">—</div>
     <div class="stat-sub" id="aumSub">Loading positions...</div>
   </div>
-
   <div class="card accent">
     <div class="card-label">Holdings</div>
     <div class="stat-val" id="holdingsCount">—</div>
     <div class="stat-sub" id="lastFiled">Latest 13F filing</div>
   </div>
-
   <div class="card accent">
     <div class="card-label">Top Position</div>
     <div class="stat-val" id="topPosition">—</div>
     <div class="stat-sub" id="topPositionPct">of disclosed portfolio</div>
   </div>
-
   <div class="card span2">
     <div class="card-label">Portfolio Positions <span id="priceTime"></span></div>
-    <div id="positionsList"><div class="loading">Fetching positions from EDGAR...</div></div>
+    <div id="positionsList"><div class="loading">Fetching positions...</div></div>
   </div>
-
   <div class="card">
     <div class="card-label">Latest News <span>Google News</span></div>
     <div id="newsFeed"><div class="loading">Loading news feed...</div></div>
   </div>
-
   <div class="card span3">
     <div class="card-label">Latest Filing Analysis <span id="filingBadge"></span></div>
-    <div id="filingAnalysis"><div class="loading">Loading latest AI analysis...</div></div>
+    <div id="filingAnalysis"><div class="loading">Loading analysis...</div></div>
   </div>
-
 </div>
-
 <script>
 const CIK = "0002045724";
 const CORS = "https://api.allorigins.win/get?url=";
 
 const KNOWN_POSITIONS = [
-  { ticker: "CRWV", name: "CoreWeave", value: 1200, pct: 21.7 },
-  { ticker: "BE",   name: "Bloom Energy", value: 911, pct: 16.5 },
-  { ticker: "CORZ", name: "Core Scientific", value: 650, pct: 11.8 },
-  { ticker: "IREN", name: "IREN Ltd", value: 329, pct: 5.9 },
-  { ticker: "APLD", name: "Applied Digital", value: 280, pct: 5.0 },
-  { ticker: "INTC", name: "Intel", value: 47, pct: 0.8 },
-  { ticker: "RIOT", name: "Riot Platforms", value: 78, pct: 1.4 },
-  { ticker: "INFY", name: "Infosys (Put)", value: 8.9, pct: 0.16 },
+  { ticker: "CRWV", name: "CoreWeave",      value: 1200, pct: 21.7 },
+  { ticker: "BE",   name: "Bloom Energy",   value: 911,  pct: 16.5 },
+  { ticker: "CORZ", name: "Core Scientific",value: 650,  pct: 11.8 },
+  { ticker: "IREN", name: "IREN Ltd",       value: 329,  pct: 5.9  },
+  { ticker: "APLD", name: "Applied Digital",value: 280,  pct: 5.0  },
+  { ticker: "RIOT", name: "Riot Platforms", value: 78,   pct: 1.4  },
+  { ticker: "INTC", name: "Intel",          value: 47,   pct: 0.8  },
+  { ticker: "INFY", name: "Infosys (Put)",  value: 8.9,  pct: 0.16 },
 ];
 
 function fmt(n) {
@@ -229,14 +176,15 @@ async function loadPositions() {
   document.getElementById("holdingsCount").textContent = KNOWN_POSITIONS.length;
   document.getElementById("aumSub").textContent = "Q4 2025 13F disclosed longs";
   document.getElementById("lastFiled").textContent = "Filed 2026-02-11";
+  document.getElementById("topPosition").textContent = KNOWN_POSITIONS[0].ticker;
+  document.getElementById("topPositionPct").textContent = KNOWN_POSITIONS[0].pct.toFixed(1) + "% of portfolio";
 
-  const top = KNOWN_POSITIONS[0];
-  document.getElementById("topPosition").textContent = top.ticker;
-  document.getElementById("topPositionPct").textContent = top.pct.toFixed(1) + "% of portfolio";
+  const priceResults = await Promise.all(KNOWN_POSITIONS.map(p => fetchPrice(p.ticker)));
 
   let html = "";
-  for (const pos of KNOWN_POSITIONS) {
-    const pd = await fetchPrice(pos.ticker);
+  for (let i = 0; i < KNOWN_POSITIONS.length; i++) {
+    const pos = KNOWN_POSITIONS[i];
+    const pd = priceResults[i];
     const priceStr = pd ? `$${pd.price.toFixed(2)}` : "—";
     const changeStr = pd ? `${pd.change >= 0 ? "+" : ""}${pd.change.toFixed(2)}%` : "";
     const changeClass = pd ? (pd.change >= 0 ? "price-up" : "price-down") : "";
@@ -262,9 +210,8 @@ async function loadNews() {
     "Leopold Aschenbrenner hedge fund",
     "CoreWeave AI data center",
   ];
-  const results = [];
 
-  for (const q of queries) {
+  const allFetches = queries.map(async q => {
     try {
       const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
       const r = await fetch(CORS + encodeURIComponent(rssUrl));
@@ -272,27 +219,25 @@ async function loadNews() {
       const parser = new DOMParser();
       const xml = parser.parseFromString(wrapper.contents, "text/xml");
       const items = xml.querySelectorAll("item");
+      const results = [];
       items.forEach((item, i) => {
         if (i > 1) return;
-        const title = item.querySelector("title")?.textContent || "";
-        const link = item.querySelector("link")?.textContent || "#";
-        const pubDate = item.querySelector("pubDate")?.textContent || "";
-        const source = item.querySelector("source")?.textContent || "News";
-        const date = pubDate ? new Date(pubDate).toLocaleDateString("en-US", {month:"short", day:"numeric"}) : "";
-        results.push({ title, link, source, date });
+        results.push({
+          title: item.querySelector("title")?.textContent || "",
+          link: item.querySelector("link")?.textContent || "#",
+          source: item.querySelector("source")?.textContent || "News",
+          date: (() => { const d = item.querySelector("pubDate")?.textContent; return d ? new Date(d).toLocaleDateString("en-US", {month:"short",day:"numeric"}) : ""; })()
+        });
       });
-    } catch {}
-  }
+      return results;
+    } catch { return []; }
+  });
 
-  if (results.length === 0) {
-    feed.innerHTML = `<div class="error-msg">News feed unavailable — check Google News directly</div>`;
-    return;
-  }
-
+  const allResults = (await Promise.all(allFetches)).flat();
   const seen = new Set();
   let html = "";
-  results.forEach(item => {
-    if (seen.has(item.title)) return;
+  allResults.forEach(item => {
+    if (seen.has(item.title) || !item.title) return;
     seen.add(item.title);
     html += `
       <div class="news-item">
@@ -307,7 +252,6 @@ async function loadNews() {
 function loadAnalysis() {
   const el = document.getElementById("filingAnalysis");
   document.getElementById("filingBadge").innerHTML = `<span class="filing-badge">13F-HR — Q4 2025</span> &nbsp; <a class="sec-link" href="https://www.sec.gov/Archives/edgar/data/2045724/000204572426000002/0002045724-26-000002-index.html" target="_blank">VIEW FULL FILING ↗</a>`;
-
   el.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
       <div class="summary-section" style="grid-column:span 2;">
@@ -331,23 +275,23 @@ function loadAnalysis() {
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
         <div class="action-item">
           <span class="action-badge badge-buy">BUY</span>
-          <div class="action-text"><strong style="color:#e8e8e8;">IREN Ltd (IREN)</strong> — SALP holds $329M here. Bitcoin miner pivoting hard to AI GPU hosting. At ~9% of portfolio, this is a high-conviction bet on AI compute demand at a fraction of CoreWeave's valuation. Volatile but accessible for retail.</div>
+          <div class="action-text"><strong style="color:#e8e8e8;">IREN Ltd (IREN)</strong> — SALP holds $329M here. Bitcoin miner pivoting hard to AI GPU hosting. At ~9% of portfolio, this is a high-conviction bet on AI compute demand at a fraction of CoreWeave's valuation.</div>
         </div>
         <div class="action-item">
           <span class="action-badge badge-buy">BUY</span>
-          <div class="action-text"><strong style="color:#e8e8e8;">Bloom Energy (BE)</strong> — $911M position, 16% of portfolio. SALP is betting that data centers will need off-grid power solutions. Fuel cells are the picks-and-shovels play most retail investors overlook entirely.</div>
+          <div class="action-text"><strong style="color:#e8e8e8;">Bloom Energy (BE)</strong> — $911M position, 16% of portfolio. SALP is betting that data centers will need off-grid power solutions. Fuel cells are the picks-and-shovels play most retail investors overlook.</div>
         </div>
         <div class="action-item">
           <span class="action-badge badge-watch">WATCH</span>
-          <div class="action-text"><strong style="color:#e8e8e8;">Intel (INTC)</strong> — $747M in calls with literally 1 share of stock is a fascinating speculative structure. Suggests someone with deep AI knowledge sees asymmetric upside — turnaround, foundry success, or acquisition. Small speculative position only.</div>
+          <div class="action-text"><strong style="color:#e8e8e8;">Intel (INTC)</strong> — $747M in calls with literally 1 share of stock. Suggests asymmetric upside — turnaround, foundry success, or acquisition. Small speculative position only.</div>
         </div>
         <div class="action-item">
           <span class="action-badge badge-watch">WATCH</span>
-          <div class="action-text"><strong style="color:#e8e8e8;">CoreWeave (CRWV)</strong> — SALP's largest position at $1.2B. Pure AGI infrastructure play. Recently IPO'd so still volatile. If you believe in the AI infrastructure thesis, this is the most direct expression of it.</div>
+          <div class="action-text"><strong style="color:#e8e8e8;">CoreWeave (CRWV)</strong> — SALP's largest position at $1.2B. Pure AGI infrastructure play. Recently IPO'd so still volatile. Most direct expression of the AI infrastructure thesis.</div>
         </div>
         <div class="action-item">
           <span class="action-badge badge-avoid">AVOID</span>
-          <div class="action-text"><strong style="color:#e8e8e8;">Infosys (INFY)</strong> — SALP is literally betting against this via put options. The thesis: AI coding assistants kill traditional IT outsourcing. If you hold legacy IT consultancies, consider whether AI disruption risk is priced in.</div>
+          <div class="action-text"><strong style="color:#e8e8e8;">Infosys (INFY)</strong> — SALP is literally betting against this via put options. The thesis: AI coding assistants kill traditional IT outsourcing. If you hold legacy IT consultancies, reconsider.</div>
         </div>
       </div>
     </div>
@@ -355,8 +299,7 @@ function loadAnalysis() {
 }
 
 async function init() {
-  const now = new Date();
-  document.getElementById("lastUpdate").textContent = "Updated " + now.toLocaleTimeString();
+  document.getElementById("lastUpdate").textContent = "Updated " + new Date().toLocaleTimeString();
   await Promise.all([loadPositions(), loadNews()]);
   loadAnalysis();
 }
