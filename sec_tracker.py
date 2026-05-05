@@ -224,7 +224,7 @@ def send_alert(filing, summary, filing_url):
 """
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"[SEC Alert] {FUND_NAME} — {filing['form']} filed {filing['date']}"
+    msg["Subject"] = f"[LEOPOLD ALPHA] {FUND_NAME} — {filing['form']} filed {filing['date']}"
     msg["From"] = SMTP_USER
     msg["To"] = ALERT_EMAIL
     msg.attach(MIMEText(html, "html"))
