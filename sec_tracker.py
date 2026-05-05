@@ -157,7 +157,7 @@ Write section 3 like a knowledgeable friend giving real advice — clear, direct
             "max_tokens": 1500,
             "messages": [{"role": "user", "content": prompt}],
         },
-        timeout=30,
+        timeout=60,
     )
     response.raise_for_status()
     return response.json()["content"][0]["text"]
@@ -171,6 +171,7 @@ def send_alert(filing, summary, filing_url):
     section3 = parts2[1].replace("— ACTIONABLE INSIGHTS FOR RETAIL INVESTORS", "").strip() if len(parts2) > 1 else ""
 
     def to_bullets(text):
+        text = re.sub(r'\*\*(.*?)\*\*', r'<strong style="color:#ffffff;">\1</strong>', text)
         lines = [l.strip().lstrip("-•▸").strip() for l in text.strip().splitlines() if l.strip()]
         return "".join(
             f'<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;">'
