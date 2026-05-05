@@ -101,6 +101,9 @@ def extract_tickers_from_filing(filing_text):
     for m in matches:
         if m not in ignore and len(m) >= 2:
             tickers.add(m)
+    # hardcoded fallback for known short tickers that auto-extraction misses
+    fallback = ["BE", "GE", "AI", "NU", "DL", "ET"]
+    tickers.update(fallback)
     return list(tickers)
 
 def fetch_prices(tickers):
