@@ -113,7 +113,7 @@ Keep it concise and factual. If the filing doesn't contain enough information fo
             "content-type": "application/json",
         },
         json={
-            "model": "claude-opus-4-20250514",
+            "model": "claude-opus-4-5",
             "max_tokens": 1000,
             "messages": [{"role": "user", "content": prompt}],
         },
