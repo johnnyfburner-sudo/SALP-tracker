@@ -73,9 +73,27 @@
   .badge-buy { background: rgba(76,175,125,0.15); color: var(--green); border: 0.5px solid rgba(76,175,125,0.3); }
   .badge-avoid { background: rgba(224,82,82,0.15); color: var(--red); border: 0.5px solid rgba(224,82,82,0.3); }
   .badge-watch { background: rgba(245,166,35,0.15); color: var(--amber); border: 0.5px solid rgba(245,166,35,0.3); }
+  .action-text { font-size: 12px; color: #bbb; line-height: 1.6; }
   .sec-link { color: var(--amber); text-decoration: none; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
   .sec-link:hover { text-decoration: underline; }
-  @media (max-width: 900px) { .main { grid-template-columns: 1fr; padding: 1rem; } .card.span2, .card.span3 { grid-column: span 1; } }
+  .comparables-section { max-width: 1200px; margin: 0 auto; padding: 0 2rem 3rem; }
+  .comparables-header { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 3px; text-transform: uppercase; padding: 1.5rem 0 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .category-block { margin-bottom: 1.5rem; }
+  .category-title { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--border-dim); }
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .comp-card { background: var(--bg2); border: 0.5px solid var(--border-dim); border-radius: 4px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; transition: border-color 0.2s; }
+  .comp-card:hover { border-color: var(--border); }
+  .comp-ticker { font-family: var(--mono); font-size: 13px; color: var(--amber); font-weight: 500; }
+  .comp-name { font-size: 11px; color: var(--text-dim); line-height: 1.3; }
+  .comp-price { font-family: var(--mono); font-size: 16px; color: #fff; font-weight: 500; margin-top: 4px; }
+  .comp-change { font-family: var(--mono); font-size: 11px; }
+  .refresh-note { font-family: var(--mono); font-size: 10px; color: var(--text-faint); }
+  @media (max-width: 900px) {
+    .main { grid-template-columns: 1fr; padding: 1rem; }
+    .card.span2, .card.span3 { grid-column: span 1; }
+    .comparables-section { padding: 0 1rem 2rem; }
+    .comp-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 </head>
 <body>
@@ -90,6 +108,7 @@
     <div class="last-update" id="lastUpdate">Loading...</div>
   </div>
 </header>
+
 <div class="main">
   <div class="card accent">
     <div class="card-label">Total AUM (Disclosed)</div>
@@ -119,6 +138,30 @@
     <div id="filingAnalysis"><div class="loading">Loading analysis...</div></div>
   </div>
 </div>
+
+<div class="comparables-section">
+  <div class="comparables-header">
+    Comparable Universe — AI Infrastructure
+    <span class="refresh-note" id="compRefreshTime">Refreshes every 30s</span>
+  </div>
+  <div class="category-block">
+    <div class="category-title">GPU Cloud / Compute</div>
+    <div class="comp-grid" id="cat-compute"></div>
+  </div>
+  <div class="category-block">
+    <div class="category-title">Data Center Operators</div>
+    <div class="comp-grid" id="cat-datacenter"></div>
+  </div>
+  <div class="category-block">
+    <div class="category-title">Power & Energy Infrastructure</div>
+    <div class="comp-grid" id="cat-power"></div>
+  </div>
+  <div class="category-block">
+    <div class="category-title">Cooling & Hardware</div>
+    <div class="comp-grid" id="cat-cooling"></div>
+  </div>
+</div>
+
 <script>
 const FILING_INDEX = "https://www.sec.gov/Archives/edgar/data/2045724/000204572426000002/0002045724-26-000002-index.html";
 
@@ -138,6 +181,30 @@ const KNOWN_POSITIONS = [
   { ticker: "EQT",  name: "EQT Corp",         value: 38,   pct: 0.7  },
   { ticker: "INFY", name: "Infosys (Put)",    value: 8.9,  pct: 0.16 },
 ];
+
+const COMPARABLES = {
+  "cat-compute": [
+    { ticker: "NVDA", name: "Nvidia — GPU market leader" },
+    { ticker: "AMD",  name: "AMD — #2 GPU, gaining AI share" },
+    { ticker: "SMCI", name: "Super Micro — AI server builder" },
+  ],
+  "cat-datacenter": [
+    { ticker: "EQIX", name: "Equinix — largest data center REIT" },
+    { ticker: "DLR",  name: "Digital Realty — global DC footprint" },
+    { ticker: "WULF", name: "TeraWulf — Bitcoin-to-AI conversion" },
+    { ticker: "CIFR", name: "Cipher Mining — early stage AI hosting" },
+  ],
+  "cat-power": [
+    { ticker: "VST",  name: "Vistra — nuclear & gas, DC contracts" },
+    { ticker: "CEG",  name: "Constellation Energy — nuclear, MSFT deal" },
+    { ticker: "NEE",  name: "NextEra — largest renewable energy" },
+    { ticker: "ETR",  name: "Entergy — utility with DC exposure" },
+  ],
+  "cat-cooling": [
+    { ticker: "VRT",  name: "Vertiv — data center cooling systems" },
+    { ticker: "AAON", name: "AAON — HVAC for data centers" },
+  ],
+};
 
 function fmt(n) {
   if (n >= 1000) return "$" + (n/1000).toFixed(1) + "B";
@@ -190,6 +257,32 @@ async function loadPositions() {
   document.getElementById("priceTime").textContent = new Date().toLocaleTimeString();
 }
 
+async function loadComparables() {
+  const allStocks = Object.values(COMPARABLES).flat();
+  const allPrices = await Promise.all(allStocks.map(s => fetchPrice(s.ticker)));
+  let idx = 0;
+  for (const [catId, stocks] of Object.entries(COMPARABLES)) {
+    const container = document.getElementById(catId);
+    let html = "";
+    stocks.forEach(stock => {
+      const pd = allPrices[idx++];
+      const priceStr = pd ? `$${pd.price.toFixed(2)}` : "—";
+      const changeStr = pd && !isNaN(pd.change) ? `${pd.change >= 0 ? "+" : ""}${pd.change.toFixed(2)}%` : "";
+      const changeClass = pd && !isNaN(pd.change) ? (pd.change >= 0 ? "price-up" : "price-down") : "";
+      html += `
+        <div class="comp-card">
+          <div class="comp-ticker">${stock.ticker}</div>
+          <div class="comp-name">${stock.name}</div>
+          <div class="comp-price">${priceStr}</div>
+          <div class="comp-change ${changeClass}">${changeStr}</div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+  document.getElementById("compRefreshTime").textContent = "Updated " + new Date().toLocaleTimeString() + " · refreshes every 30s";
+}
+
 async function loadNews() {
   const feed = document.getElementById("newsFeed");
   const queries = ["Leopold Aschenbrenner", "Situational Awareness LP"];
@@ -232,18 +325,16 @@ function loadAnalysis() {
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
       <div class="summary-section" style="grid-column:span 2;">
         <div class="summary-section-title">01 / Macro & Philosophy</div>
-        <div class="summary-text">
-          Situational Awareness LP continues to concentrate around the AGI transition thesis, with no meaningful philosophical pivot in Q4. The fund is doubling down on AI infrastructure and compute as the core macro bet — reflecting Aschenbrenner's view that the race to AGI is accelerating faster than consensus expects. Nearly 80% of the portfolio is in data center operators and energy plays, reflecting conviction that AGI development will be bottlenecked by power and cooling, not chips. The fund is hunting for asymmetric bets where the market hasn't fully priced in AI infrastructure demand — notably absent are obvious plays like NVDA or MSFT.
-        </div>
+        <div class="summary-text">Situational Awareness LP continues to concentrate around the AGI transition thesis, with no meaningful philosophical pivot in Q4. The fund is doubling down on AI infrastructure and compute as the core macro bet — reflecting Aschenbrenner's view that the race to AGI is accelerating faster than consensus expects. Nearly 80% of the portfolio is in data center operators and energy plays, reflecting conviction that AGI development will be bottlenecked by power and cooling, not chips. The fund is hunting for asymmetric bets where the market hasn't fully priced in AI infrastructure demand — notably absent are obvious plays like NVDA or MSFT.</div>
       </div>
       <div class="summary-section">
         <div class="summary-section-title">02 / Position Changes</div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>Total AUM ~$5.5B across 14 disclosed long positions</span></div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>CoreWeave (CRWV) — largest new position, ~$1.2B, 22% of portfolio</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Bloom Energy (BE) — $911M position, 16% of portfolio, energy infrastructure bet</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>Bloom Energy (BE) — $911M position, 16% of portfolio</span></div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>Core Scientific (CORZ) — increased to 9.4% ownership stake</span></div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>Intel (INTC) — $747M in call options + 1 share of common stock</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Infosys (INFY) — $8.9M in put options, betting against traditional IT outsourcing</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>Infosys (INFY) — $8.9M in put options, betting against traditional IT</span></div>
       </div>
     </div>
     <div style="border-top:0.5px solid rgba(255,255,255,0.06);padding-top:1rem;margin-top:0.5rem;">
@@ -255,7 +346,7 @@ function loadAnalysis() {
         </div>
         <div class="action-item">
           <span class="action-badge badge-buy">BUY</span>
-          <div class="action-text"><strong style="color:#e8e8e8;">Bloom Energy (BE)</strong> — $911M position, 16% of portfolio. SALP is betting data centers need off-grid power. Fuel cells are the picks-and-shovels play most retail investors overlook.</div>
+          <div class="action-text"><strong style="color:#e8e8e8;">Bloom Energy (BE)</strong> — $911M position, 16% of portfolio. SALP is betting data centers need off-grid power. The picks-and-shovels play most retail investors overlook.</div>
         </div>
         <div class="action-item">
           <span class="action-badge badge-watch">WATCH</span>
@@ -267,17 +358,24 @@ function loadAnalysis() {
         </div>
         <div class="action-item">
           <span class="action-badge badge-avoid">AVOID</span>
-          <div class="action-text"><strong style="color:#e8e8e8;">Infosys (INFY)</strong> — SALP is literally betting against this via put options. The thesis: AI coding assistants kill traditional IT outsourcing. If you hold legacy IT consultancies, reconsider.</div>
+          <div class="action-text"><strong style="color:#e8e8e8;">Infosys (INFY)</strong> — SALP is literally betting against this via put options. AI coding assistants kill traditional IT outsourcing. If you hold legacy IT consultancies, reconsider.</div>
         </div>
       </div>
     </div>
   `;
 }
 
-async function init() {
+async function refreshPrices() {
+  await Promise.all([loadPositions(), loadComparables()]);
   document.getElementById("lastUpdate").textContent = "Updated " + new Date().toLocaleTimeString();
-  await Promise.all([loadPositions(), loadNews()]);
+}
+
+async function init() {
+  document.getElementById("lastUpdate").textContent = "Loading...";
+  await Promise.all([loadPositions(), loadNews(), loadComparables()]);
   loadAnalysis();
+  document.getElementById("lastUpdate").textContent = "Updated " + new Date().toLocaleTimeString();
+  setInterval(refreshPrices, 30000);
 }
 
 init();
