@@ -101,7 +101,6 @@ def extract_tickers_from_filing(filing_text):
     for m in matches:
         if m not in ignore and len(m) >= 2:
             tickers.add(m)
-    # hardcoded fallback for known short tickers that auto-extraction misses
     fallback = ["BE", "GE", "AI", "NU", "DL", "ET"]
     tickers.update(fallback)
     return list(tickers)
@@ -109,6 +108,9 @@ def extract_tickers_from_filing(filing_text):
 def fetch_prices(tickers):
     prices = {}
     for ticker in tickers:
+        price = None
+
+        # try Yahoo Finance first
         try:
             url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=1d"
             r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
@@ -116,9 +118,25 @@ def fetch_prices(tickers):
             result = data.get("chart", {}).get("result")
             if result:
                 price = result[0]["meta"]["regularMarketPrice"]
-                prices[ticker] = f"${price:,.2f}"
         except:
             pass
+
+        # fall back to Alpha Vantage if Yahoo failed
+        if not price:
+            try:
+                av_key = os.environ.get("ALPHA_VANTAGE_KEY", "")
+                url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ticker}&apikey={av_key}"
+                r = requests.get(url, timeout=10)
+                data = r.json()
+                price_str = data.get("Global Quote", {}).get("05. price")
+                if price_str:
+                    price = float(price_str)
+            except:
+                pass
+
+        if price:
+            prices[ticker] = f"${price:,.2f}"
+
     return prices
 
 def summarize_with_claude(filing_text, form_type, prices_str=""):
