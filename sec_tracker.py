@@ -64,22 +64,34 @@ def fetch_filing_text(accession):
     cik_clean = CIK.lstrip("0")
     index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_clean}/{accession}-index.html"
     headers = {"User-Agent": "filing-tracker k.franzmeilinger@gmail.com"}
+    combined_text = ""
+
     try:
+        # fetch the index page to find all document links
         r = requests.get(index_url, headers=headers, timeout=15)
         r.raise_for_status()
-        # find the main document link
-        matches = re.findall(r'href="(/Archives/edgar/data/[^"]+\.(?:xml|htm|txt))"', r.text, re.IGNORECASE)
-        for match in matches:
-            if "index" not in match.lower():
-                doc_url = f"https://www.sec.gov{match}"
-                doc_r = requests.get(doc_url, headers=headers, timeout=15)
-                text = re.sub(r'<[^>]+>', ' ', doc_r.text)
-                text = re.sub(r'\s+', ' ', text).strip()
-                return text[:12000], index_url
+
+        # grab all .xml file links (skip the big .txt bundle)
+        xml_links = re.findall(
+            r'href="(/Archives/edgar/data/[^"]+\.xml)"', r.text, re.IGNORECASE
+        )
+        xml_links = [l for l in xml_links if not l.endswith(".txt")]
+
+        for link in xml_links:
+            doc_url = f"https://www.sec.gov{link}"
+            doc_r = requests.get(doc_url, headers=headers, timeout=15)
+            # strip XML tags and clean whitespace
+            text = re.sub(r'<[^>]+>', ' ', doc_r.text)
+            text = re.sub(r'\s+', ' ', text).strip()
+            combined_text += text + "\n\n"
+
+        # trim to 15000 chars to stay within Claude's context
+        combined_text = combined_text[:15000]
+
     except Exception as e:
         print(f"Could not fetch filing text: {e}")
-    return None, index_url
 
+    return combined_text or None, index_url
 def summarize_with_claude(filing_text, form_type):
     topics_str = "\n".join(f"- {t}" for t in SUMMARY_TOPICS)
     position_str = "\n".join(f"- {t}" for t in POSITION_TOPICS)
