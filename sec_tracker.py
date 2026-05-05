@@ -157,4 +157,4 @@ def main():
         print(f"[{datetime.now():%Y-%m-%d %H:%M}] No new filings.")
         return
     for filing in new_filings:
-        print(f"New filing found: {filing['form']} on {filing['da
+print(f"New filing found: {filing['form']} on {filing['date']}")
