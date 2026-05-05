@@ -5,7 +5,7 @@ from datetime import datetime
 
 CIK = "0002045724"
 FUND_NAME = "Situational Awareness LP"
-ALERT_EMAIL = "k.franzmeilinger@gmail.com"
+ALERT_EMAIL = os.environ["ALERT_EMAIL"]
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
 SMTP_USER = os.environ["SMTP_USER"]
@@ -53,7 +53,7 @@ def save_seen(seen):
 
 def fetch_recent_filings():
     url = f"https://data.sec.gov/submissions/CIK{CIK}.json"
-    headers = {"User-Agent": "filing-tracker k.franzmeilinger@gmail.com"}
+    headers = {"User-Agent": "filing-tracker sec-monitor"}
     r = requests.get(url, headers=headers, timeout=15)
     r.raise_for_status()
     data = r.json()
@@ -280,7 +280,6 @@ def send_alert(filing, summary, filing_url):
     msg["Subject"] = f"[SEC Alert] {FUND_NAME} — {filing['form']} filed {filing['date']}"
     msg["From"] = SMTP_USER
     msg["To"] = ALERT_EMAIL
-    msg["Bcc"] = "mattcochran00@gmail.com"
     msg.attach(MIMEText(html, "html"))
 
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as s:
