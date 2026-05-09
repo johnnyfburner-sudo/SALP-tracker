@@ -390,7 +390,7 @@ def update_index_html(positions_data):
 def main():
     seen = load_seen()
     filings = fetch_recent_filings()
-    new_filings = [f for f in filings if f["accession"] not in seen]
+    new_filings = filings[:1]  # only process most recent filing
     if not new_filings:
         print(f"[{datetime.now():%Y-%m-%d %H:%M}] No new filings.")
         return
