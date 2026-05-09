@@ -82,7 +82,10 @@ def fetch_filing_documents(accession):
     acc_clean = accession.replace("-", "")
     cik_clean = CIK.lstrip("0")
     index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_clean}/{accession}-index.html"
-    headers = {"User-Agent": "filing-tracker sec-monitor"}
+    headers = {
+        "User-Agent": "filing-tracker k.franzmeilinger@gmail.com",
+        "Accept": "application/json",
+    }
     time.sleep(0.5)
     r = requests.get(index_url, headers=headers, timeout=15)
     r.raise_for_status()
