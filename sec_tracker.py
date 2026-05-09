@@ -1,4 +1,4 @@
-import requests, smtplib, json, os, re
+import requests, smtplib, json, os, re, time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, date
@@ -59,7 +59,11 @@ def save_positions(positions):
 
 def fetch_recent_filings():
     url = f"https://data.sec.gov/submissions/CIK{CIK}.json"
-    headers = {"User-Agent": "filing-tracker sec-monitor"}
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; filing-tracker/1.0; +mailto:k.franzmeilinger@gmail.com)",
+        "Accept-Encoding": "gzip, deflate",
+        "Host": "www.sec.gov"
+    }
     r = requests.get(url, headers=headers, timeout=15)
     r.raise_for_status()
     data = r.json()
@@ -79,6 +83,7 @@ def fetch_filing_documents(accession):
     cik_clean = CIK.lstrip("0")
     index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_clean}/{accession}-index.html"
     headers = {"User-Agent": "filing-tracker sec-monitor"}
+    time.sleep(0.5)
     r = requests.get(index_url, headers=headers, timeout=15)
     r.raise_for_status()
     index_html = r.text
