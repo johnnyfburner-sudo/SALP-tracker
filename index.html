@@ -158,8 +158,14 @@
     <div class="stat-sub" id="statTopPct">of portfolio</div>
   </div>
 
-  <div class="card span2">
+<div class="card span2">
     <div class="card-label">Portfolio Positions <span id="priceTime"></span></div>
+    <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;padding-bottom:6px;border-bottom:0.5px solid rgba(255,255,255,0.06);margin-bottom:4px;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;">COMPANY</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-align:right;">SHARE PRICE</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-align:right;">SALP INVESTMENT</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-align:right;">% PORTFOLIO</div>
+    </div>
     <div id="positionsList"><div class="loading">Fetching live prices...</div></div>
   </div>
 
