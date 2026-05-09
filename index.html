@@ -42,22 +42,32 @@
   .card-label span { color: var(--text-faint); font-size: 10px; }
   .stat-val { font-family: var(--mono); font-size: 28px; color: #fff; font-weight: 500; }
   .stat-sub { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: 4px; }
-  .position-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: start; padding: 8px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; }
+
+  /* position table */
+  .pos-header { display: grid; grid-template-columns: 1fr 90px 90px 55px; gap: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--border-dim); margin-bottom: 4px; }
+  .pos-header div { font-family: var(--mono); font-size: 10px; color: var(--text-faint); letter-spacing: 1px; text-align: right; }
+  .pos-header div:first-child { text-align: left; }
+  .position-row { display: grid; grid-template-columns: 1fr 90px 90px 55px; gap: 8px; align-items: start; padding: 8px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; }
   .position-row:last-child { border-bottom: none; }
   .pos-ticker { color: var(--amber); font-weight: 500; }
   .pos-name { color: var(--text-dim); font-size: 11px; margin-top: 2px; }
   .pos-indicator { font-size: 10px; margin-top: 2px; }
-  .pos-price { color: var(--text); text-align: right; }
+  .pos-price { text-align: right; }
+  .pos-val { color: var(--text-dim); text-align: right; font-size: 11px; }
   .pos-pct { color: var(--text-dim); text-align: right; font-size: 11px; }
-  .pos-bar-wrap { grid-column: span 4; height: 2px; background: var(--bg3); border-radius: 1px; margin-top: 2px; margin-bottom: 4px; }
+  .pos-bar-wrap { grid-column: span 4; height: 2px; background: var(--bg3); border-radius: 1px; margin-top: 2px; margin-bottom: 2px; }
   .pos-bar { height: 2px; background: var(--amber); border-radius: 1px; opacity: 0.5; }
-  .badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 2px; margin-left: 4px; vertical-align: middle; }
+  .badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 2px; margin-left: 4px; vertical-align: middle; font-family: var(--mono); }
   .badge-call { background: rgba(76,175,125,0.1); color: var(--green); border: 0.5px solid rgba(76,175,125,0.3); }
   .badge-put { background: rgba(224,82,82,0.1); color: var(--red); border: 0.5px solid rgba(224,82,82,0.3); }
   .ind-new { color: var(--green); }
   .ind-exited { color: var(--red); }
   .ind-up { color: var(--green); }
   .ind-down { color: var(--red); }
+  .price-up { color: var(--green); }
+  .price-down { color: var(--red); }
+
+  /* news */
   .news-item { padding: 10px 0; border-bottom: 0.5px solid var(--border-dim); display: flex; flex-direction: column; gap: 4px; }
   .news-item:last-child { border-bottom: none; }
   .news-headline { font-size: 13px; color: var(--text); line-height: 1.4; }
@@ -65,16 +75,14 @@
   .news-headline a:hover { color: var(--amber); }
   .news-meta { font-family: var(--mono); font-size: 10px; color: var(--text-faint); display: flex; gap: 12px; }
   .news-source { color: var(--amber); }
+
+  /* analysis */
   .summary-text { font-size: 13px; line-height: 1.8; color: #bbb; border-left: 2px solid var(--amber); padding-left: 1rem; }
   .summary-section { margin-bottom: 1.5rem; }
   .summary-section-title { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 2px; margin-bottom: 8px; }
   .bullet { display: flex; gap: 8px; margin-bottom: 6px; font-size: 13px; color: #bbb; }
   .bullet-arrow { color: var(--amber); flex-shrink: 0; }
   .filing-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 8px; border: 0.5px solid var(--amber); color: var(--amber); border-radius: 2px; letter-spacing: 1px; }
-  .loading { color: var(--text-faint); font-family: var(--mono); font-size: 12px; }
-  .error-msg { color: var(--red); font-family: var(--mono); font-size: 11px; }
-  .price-up { color: var(--green); }
-  .price-down { color: var(--red); }
   .action-item { padding: 10px 0; border-bottom: 0.5px solid var(--border-dim); }
   .action-item:last-child { border-bottom: none; }
   .action-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 6px; border-radius: 2px; margin-bottom: 4px; }
@@ -84,47 +92,56 @@
   .action-text { font-size: 12px; color: #bbb; line-height: 1.6; }
   .sec-link { color: var(--amber); text-decoration: none; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
   .sec-link:hover { text-decoration: underline; }
+
+  /* comparables */
   .comparables-section { max-width: 1200px; margin: 0 auto; padding: 0 2rem 2rem; }
   .comparables-header { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 3px; text-transform: uppercase; padding: 1.5rem 0 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   .category-block { margin-bottom: 1.5rem; }
   .category-title { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--border-dim); }
   .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
-  .comp-card { background: var(--bg2); border: 0.5px solid var(--border-dim); border-radius: 4px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; transition: border-color 0.2s; }
+  .comp-card { background: var(--bg2); border: 0.5px solid var(--border-dim); border-radius: 4px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
   .comp-card:hover { border-color: var(--border); }
   .comp-ticker { font-family: var(--mono); font-size: 13px; color: var(--amber); font-weight: 500; }
   .comp-name { font-size: 11px; color: var(--text-dim); line-height: 1.3; }
   .comp-price { font-family: var(--mono); font-size: 16px; color: #fff; font-weight: 500; margin-top: 4px; }
   .comp-change { font-family: var(--mono); font-size: 11px; }
   .refresh-note { font-family: var(--mono); font-size: 10px; color: var(--text-faint); }
+
+  /* calculator */
   .calculator-section { max-width: 1200px; margin: 0 auto; padding: 0 2rem 3rem; }
   .calc-header { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 3px; text-transform: uppercase; padding: 1.5rem 0 1rem; border-top: 1px solid var(--border); }
-  .calc-inputs { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .calc-inputs { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: flex-end; }
   .calc-input-group { display: flex; flex-direction: column; gap: 4px; }
   .calc-input-group label { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
   .calc-input-group input { background: var(--bg2); border: 0.5px solid var(--border-dim); color: var(--text); font-family: var(--mono); font-size: 14px; padding: 8px 12px; border-radius: 4px; width: 180px; }
   .calc-input-group input:focus { outline: none; border-color: var(--amber); }
-  .calc-btn { background: var(--amber); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; letter-spacing: 1px; align-self: flex-end; }
+  .calc-btn { background: var(--amber); color: #000; font-family: var(--mono); font-size: 11px; font-weight: 500; padding: 9px 16px; border: none; border-radius: 4px; cursor: pointer; letter-spacing: 1px; }
   .calc-btn:hover { background: #c4821a; }
-  .calc-results { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .calc-col-title { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--border-dim); }
-  .calc-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; }
-  .calc-row:last-child { border-bottom: none; }
-  .calc-ticker { color: var(--amber); }
-  .calc-amount { color: #fff; font-weight: 500; }
-  .calc-toggle { display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; cursor: pointer; }
-  .calc-toggle:last-child { border-bottom: none; }
-  .calc-toggle input { accent-color: var(--amber); cursor: pointer; }
-  .calc-summary { grid-column: span 2; background: var(--bg2); border: 0.5px solid var(--border); border-radius: 4px; padding: 1rem; display: flex; justify-content: space-between; margin-bottom: 1rem; }
+  .calc-summary { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 4px; padding: 1rem 1.5rem; display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
   .calc-summary-item { display: flex; flex-direction: column; gap: 2px; }
   .calc-summary-label { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
-  .calc-summary-val { font-family: var(--mono); font-size: 18px; color: #fff; font-weight: 500; }
+  .calc-summary-val { font-family: var(--mono); font-size: 20px; color: #fff; font-weight: 500; }
+  .calc-results { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .calc-col-title { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--border-dim); }
+  .calc-row { display: grid; grid-template-columns: 70px 1fr 70px; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; }
+  .calc-row:last-child { border-bottom: none; }
+  .calc-ticker { color: var(--amber); }
+  .calc-pct { color: var(--text-dim); font-size: 11px; text-align: right; }
+  .calc-amount { color: #fff; font-weight: 500; text-align: right; }
+  .calc-toggle { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; cursor: pointer; }
+  .calc-toggle:last-child { border-bottom: none; }
+  .calc-toggle input { accent-color: var(--amber); cursor: pointer; width: 14px; height: 14px; }
+
+  .loading { color: var(--text-faint); font-family: var(--mono); font-size: 12px; }
+  .error-msg { color: var(--red); font-family: var(--mono); font-size: 11px; }
+
   @media (max-width: 900px) {
     .main { grid-template-columns: 1fr; padding: 1rem; }
     .card.span2, .card.span3 { grid-column: span 1; }
     .comparables-section, .calculator-section { padding: 0 1rem 2rem; }
     .comp-grid { grid-template-columns: repeat(2, 1fr); }
     .calc-results { grid-template-columns: 1fr; }
-    .calc-summary { grid-column: span 1; flex-direction: column; gap: 1rem; }
+    .calc-summary { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
@@ -144,7 +161,7 @@
 <div class="main">
   <div class="card accent">
     <div class="card-label">Total AUM (Disclosed)</div>
-    <div class="stat-val" id="statAum">$5.5B</div>
+    <div class="stat-val" id="statAum">—</div>
     <div class="stat-sub">Latest 13F disclosed longs</div>
   </div>
   <div class="card accent">
@@ -158,13 +175,13 @@
     <div class="stat-sub" id="statTopPct">of portfolio</div>
   </div>
 
-<div class="card span2">
+  <div class="card span2">
     <div class="card-label">Portfolio Positions <span id="priceTime"></span></div>
-    <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;padding-bottom:6px;border-bottom:0.5px solid rgba(255,255,255,0.06);margin-bottom:4px;">
-      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;">COMPANY</div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-align:right;">SHARE PRICE</div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-align:right;">SALP INVESTMENT</div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-align:right;">% PORTFOLIO</div>
+    <div class="pos-header">
+      <div>COMPANY</div>
+      <div>SHARE PRICE</div>
+      <div>SALP INVESTMENT</div>
+      <div>% PORT</div>
     </div>
     <div id="positionsList"><div class="loading">Fetching live prices...</div></div>
   </div>
@@ -208,11 +225,11 @@
   <div class="calc-inputs">
     <div class="calc-input-group">
       <label>INVESTMENT AMOUNT ($)</label>
-      <input type="number" id="calcAmount" placeholder="10000" value="10000">
+      <input type="number" id="calcAmount" value="10000">
     </div>
     <div class="calc-input-group">
       <label>CASH RESERVE (%)</label>
-      <input type="number" id="calcReserve" placeholder="10" value="10" min="0" max="100">
+      <input type="number" id="calcReserve" value="10" min="0" max="100">
     </div>
     <button class="calc-btn" onclick="runCalculator()">CALCULATE ↗</button>
   </div>
@@ -223,8 +240,17 @@
 const FINNHUB_KEY = "d7t8bn1r01qugn09og2gd7t8bn1r01qugn09og30";
 const FILING_INDEX = "https://www.sec.gov/Archives/edgar/data/2045724/000204572426000002/0002045724-26-000002-index.html";
 
-// AUTO-UPDATED BY sec_tracker.py — DO NOT EDIT MANUALLY
-const KNOWN_POSITIONS = [{"key":"COREWEAVE INC","name":"COREWEAVE INC","value":1200000000,"pct":21.7,"holdings":[{"value":1200000000,"shares":"","share_type":"SH","put_call":""}]},{"key":"BLOOM ENERGY CORP","name":"BLOOM ENERGY CORP","value":911000000,"pct":16.5,"holdings":[{"value":456000000,"shares":"","share_type":"SH","put_call":""},{"value":455000000,"shares":"","share_type":"SH","put_call":"CALL"}]},{"key":"CORE SCIENTIFIC INC NEW","name":"CORE SCIENTIFIC INC NEW","value":650000000,"pct":11.8,"holdings":[{"value":650000000,"shares":"","share_type":"SH","put_call":""}]},{"key":"INTEL CORP","name":"INTEL CORP","value":747000000,"pct":13.5,"holdings":[{"value":1,"shares":"1","share_type":"SH","put_call":""},{"value":746999999,"shares":"","share_type":"SH","put_call":"CALL"}]},{"key":"IREN LIMITED","name":"IREN LIMITED","value":329000000,"pct":5.9,"holdings":[{"value":329000000,"shares":"","share_type":"SH","put_call":""}]},{"key":"APPLIED DIGITAL CORP","name":"APPLIED DIGITAL CORP","value":280000000,"pct":5.0,"holdings":[{"value":280000000,"shares":"","share_type":"SH","put_call":""}]},{"key":"RIOT PLATFORMS INC","name":"RIOT PLATFORMS INC","value":78000000,"pct":1.4,"holdings":[{"value":78000000,"shares":"","share_type":"SH","put_call":""}]},{"key":"INFOSYS LTD","name":"INFOSYS LTD","value":8900000,"pct":0.16,"holdings":[{"value":8900000,"shares":"","share_type":"SH","put_call":"PUT"}]}];
+// AUTO-UPDATED BY sec_tracker.py
+const KNOWN_POSITIONS = [
+  {"key":"COREWEAVE INC","name":"COREWEAVE INC","value":1200000000,"pct":21.7,"holdings":[{"value":1200000000,"shares":"","share_type":"SH","put_call":""}]},
+  {"key":"BLOOM ENERGY CORP","name":"BLOOM ENERGY CORP","value":911000000,"pct":16.5,"holdings":[{"value":456000000,"shares":"","share_type":"SH","put_call":""},{"value":455000000,"shares":"","share_type":"SH","put_call":"CALL"}]},
+  {"key":"INTEL CORP","name":"INTEL CORP","value":747000000,"pct":13.5,"holdings":[{"value":1,"shares":"1","share_type":"SH","put_call":""},{"value":746999999,"shares":"","share_type":"SH","put_call":"CALL"}]},
+  {"key":"CORE SCIENTIFIC INC NEW","name":"CORE SCIENTIFIC INC NEW","value":650000000,"pct":11.8,"holdings":[{"value":650000000,"shares":"","share_type":"SH","put_call":""}]},
+  {"key":"IREN LIMITED","name":"IREN LIMITED","value":329000000,"pct":5.9,"holdings":[{"value":329000000,"shares":"","share_type":"SH","put_call":""}]},
+  {"key":"APPLIED DIGITAL CORP","name":"APPLIED DIGITAL CORP","value":280000000,"pct":5.0,"holdings":[{"value":280000000,"shares":"","share_type":"SH","put_call":""}]},
+  {"key":"RIOT PLATFORMS INC","name":"RIOT PLATFORMS INC","value":78000000,"pct":1.4,"holdings":[{"value":78000000,"shares":"","share_type":"SH","put_call":""}]},
+  {"key":"INFOSYS LTD","name":"INFOSYS LTD","value":8900000,"pct":0.16,"holdings":[{"value":8900000,"shares":"","share_type":"SH","put_call":"PUT"}]}
+];
 
 const COMPARABLES = {
   "cat-compute": [
@@ -250,7 +276,6 @@ const COMPARABLES = {
   ],
 };
 
-// ticker map for positions
 const TICKER_MAP = {
   "COREWEAVE INC": "CRWV",
   "BLOOM ENERGY CORP": "BE",
@@ -260,24 +285,6 @@ const TICKER_MAP = {
   "APPLIED DIGITAL CORP": "APLD",
   "RIOT PLATFORMS INC": "RIOT",
   "INFOSYS LTD": "INFY",
-  "MARATHON DIGITAL": "MARA",
-  "BITFARMS LTD": "BITF",
-  "CIPHER MINING INC": "CIFR",
-  "HUT 8 CORP": "HUT",
-  "CLEANSPARK INC": "CLSK",
-  "BITDEER TECHNOLOGIES GROUP": "BTDR",
-  "COHERENT CORP": "COHR",
-  "EQT CORP": "EQT",
-  "BABCOCK WILCOX ENTERPRISES": "BW",
-  "KILROY REALTY CORP": "KRC",
-  "LIBERTY ENERGY INC": "LBRT",
-  "LUMENTUM HLDGS INC": "LITE",
-  "POWER SOLUTIONS INTL INC": "PSIX",
-  "PROPETRO HLDG CORP": "PUMP",
-  "SANDISK CORP": "SNDK",
-  "SOLARIS ENERGY INFRAS INC": "SEI",
-  "TOWER SEMICONDUCTOR LTD": "TSEM",
-  "WHITEFIBER INC": "WFBR",
 };
 
 function fmt(n) {
@@ -287,11 +294,11 @@ function fmt(n) {
 }
 
 function getTicker(name) {
-  const upper = name.toUpperCase();
+  const upper = name.toUpperCase().trim();
+  if (TICKER_MAP[upper]) return TICKER_MAP[upper];
   for (const [k, v] of Object.entries(TICKER_MAP)) {
-    if (upper.includes(k) || k.includes(upper)) return v;
+    if (upper.includes(k)) return v;
   }
-  // fallback: first word
   return name.split(/\s+/)[0].replace(/[^A-Z]/gi, "").toUpperCase();
 }
 
@@ -304,30 +311,15 @@ async function fetchPrice(ticker) {
   } catch { return null; }
 }
 
-function renderIndicator(pos) {
-  if (!pos.change) return "";
-  const s = pos.change.status;
-  if (s === "NEW") return '<span class="pos-indicator ind-new">🟢 NEW</span>';
-  if (s === "EXITED") return '<span class="pos-indicator ind-exited">🔴 EXITED</span>';
-  if (s === "INCREASED") return `<span class="pos-indicator ind-up">▲ +${fmt(Math.abs(pos.change.delta))} (${pos.change.delta_pct > 0 ? "+" : ""}${pos.change.delta_pct.toFixed(1)}%)</span>`;
-  if (s === "DECREASED") return `<span class="pos-indicator ind-down">▼ -${fmt(Math.abs(pos.change.delta))} (${pos.change.delta_pct.toFixed(1)}%)</span>`;
-  return "";
-}
-
 async function loadPositions() {
-  const list = document.getElementById("positionsList");
   const totalValue = KNOWN_POSITIONS.reduce((s, p) => s + p.value, 0);
-
-  // update stat cards
   document.getElementById("statAum").textContent = fmt(totalValue);
   document.getElementById("statHoldings").textContent = KNOWN_POSITIONS.length;
   document.getElementById("statFiled").textContent = "Filed 2026-02-11";
   const top = KNOWN_POSITIONS[0];
-  const topTicker = getTicker(top.name);
-  document.getElementById("statTop").textContent = topTicker;
+  document.getElementById("statTop").textContent = getTicker(top.name);
   document.getElementById("statTopPct").textContent = top.pct.toFixed(1) + "% of portfolio";
 
-  // fetch all prices in parallel
   const tickers = KNOWN_POSITIONS.map(p => getTicker(p.name));
   const priceResults = await Promise.all(tickers.map(t => fetchPrice(t)));
 
@@ -339,33 +331,43 @@ async function loadPositions() {
     const changeStr = pd && !isNaN(pd.change) ? `${pd.change >= 0 ? "+" : ""}${pd.change.toFixed(2)}%` : "";
     const changeClass = pd && !isNaN(pd.change) ? (pd.change >= 0 ? "price-up" : "price-down") : "";
     const barPct = ((pos.value / KNOWN_POSITIONS[0].value) * 100).toFixed(0);
-    const indicator = renderIndicator(pos);
 
-    // put/call badges — only show if not regular shares
     let badges = "";
     if (pos.holdings) {
-      pos.holdings.forEach(h => {
-        if (h.put_call === "CALL") badges += '<span class="badge badge-call">CALL</span>';
-        else if (h.put_call === "PUT") badges += '<span class="badge badge-put">PUT</span>';
-      });
+      const hasPut = pos.holdings.some(h => h.put_call === "PUT");
+      const hasCall = pos.holdings.some(h => h.put_call === "CALL");
+      if (hasCall) badges += '<span class="badge badge-call">CALL</span>';
+      if (hasPut) badges += '<span class="badge badge-put">PUT</span>';
+    }
+
+    let indicator = "";
+    if (pos.change) {
+      const s = pos.change.status;
+      if (s === "NEW") indicator = '<div class="pos-indicator ind-new">🟢 NEW</div>';
+      else if (s === "EXITED") indicator = '<div class="pos-indicator ind-exited">🔴 EXITED</div>';
+      else if (s === "INCREASED") indicator = `<div class="pos-indicator ind-up">▲ +${fmt(Math.abs(pos.change.delta))} (${pos.change.delta_pct > 0 ? "+" : ""}${pos.change.delta_pct.toFixed(1)}%)</div>`;
+      else if (s === "DECREASED") indicator = `<div class="pos-indicator ind-down">▼ -${fmt(Math.abs(pos.change.delta))} (${pos.change.delta_pct.toFixed(1)}%)</div>`;
     }
 
     html += `
       <div class="position-row">
         <div>
-          <div class="pos-ticker">${ticker} ${badges}</div>
+          <div class="pos-ticker">${ticker}${badges}</div>
           <div class="pos-name">${pos.name}</div>
           ${indicator}
         </div>
-        <div class="pos-price">${priceStr}<br><span class="${changeClass}" style="font-size:10px;">${changeStr}</span></div>
-        <div class="pos-pct">${fmt(pos.value)}</div>
+        <div class="pos-price">
+          <div style="color:var(--text);text-align:right;">${priceStr}</div>
+          <div class="${changeClass}" style="font-size:10px;text-align:right;">${changeStr}</div>
+        </div>
+        <div class="pos-val">${fmt(pos.value)}</div>
         <div class="pos-pct">${pos.pct.toFixed(1)}%</div>
       </div>
       <div class="pos-bar-wrap"><div class="pos-bar" style="width:${barPct}%"></div></div>
     `;
   });
 
-  list.innerHTML = html;
+  document.getElementById("positionsList").innerHTML = html;
   document.getElementById("priceTime").textContent = new Date().toLocaleTimeString();
 }
 
@@ -405,9 +407,7 @@ async function loadNews() {
       const r = await fetch(apiUrl);
       const data = await r.json();
       return (data.items || []).slice(0, 3).map(item => ({
-        title: item.title,
-        link: item.link,
-        source: item.author || "News",
+        title: item.title, link: item.link, source: item.author || "News",
         date: item.pubDate ? new Date(item.pubDate).toLocaleDateString("en-US", {month:"short", day:"numeric"}) : ""
       }));
     });
@@ -421,12 +421,11 @@ async function loadNews() {
         <div class="news-item">
           <div class="news-headline"><a href="${item.link}" target="_blank">${item.title}</a></div>
           <div class="news-meta"><span class="news-source">${item.source}</span><span>${item.date}</span></div>
-        </div>
-      `;
+        </div>`;
     });
     feed.innerHTML = html || `<div class="error-msg">No recent news found</div>`;
   } catch(e) {
-    feed.innerHTML = `<div class="error-msg">News unavailable: ${e.message}</div>`;
+    feed.innerHTML = `<div class="error-msg">News unavailable</div>`;
   }
 }
 
@@ -443,7 +442,7 @@ function loadAnalysis() {
         <div class="summary-section-title">02 / Position Changes</div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>Total AUM ~$5.5B across disclosed long positions</span></div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>CoreWeave (CRWV) — largest new position, ~$1.2B</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Bloom Energy (BE) — $911M position, 16% of portfolio</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>Bloom Energy (BE) — $911M, 16% of portfolio</span></div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>Core Scientific (CORZ) — increased to 9.4% ownership</span></div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>Intel (INTC) — $747M in call options + 1 share</span></div>
         <div class="bullet"><span class="bullet-arrow">▸</span><span>Infosys (INFY) — $8.9M in put options</span></div>
@@ -454,12 +453,11 @@ function loadAnalysis() {
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
         <div class="action-item"><span class="action-badge badge-buy">BUY</span><div class="action-text"><strong style="color:#e8e8e8;">IREN Ltd (IREN)</strong> — SALP holds $329M. Bitcoin miner pivoting to AI GPU hosting. High-conviction bet at a fraction of CoreWeave's valuation.</div></div>
         <div class="action-item"><span class="action-badge badge-buy">BUY</span><div class="action-text"><strong style="color:#e8e8e8;">Bloom Energy (BE)</strong> — $911M, 16% of portfolio. Data centers need off-grid power. The picks-and-shovels play most retail investors overlook.</div></div>
-        <div class="action-item"><span class="action-badge badge-watch">WATCH</span><div class="action-text"><strong style="color:#e8e8e8;">Intel (INTC)</strong> — $747M in calls + 1 share. Asymmetric upside bet — turnaround, foundry, or acquisition. Small speculative position only.</div></div>
+        <div class="action-item"><span class="action-badge badge-watch">WATCH</span><div class="action-text"><strong style="color:#e8e8e8;">Intel (INTC)</strong> — $747M in calls + 1 share. Asymmetric upside — turnaround, foundry, or acquisition. Small speculative position only.</div></div>
         <div class="action-item"><span class="action-badge badge-watch">WATCH</span><div class="action-text"><strong style="color:#e8e8e8;">CoreWeave (CRWV)</strong> — SALP's largest at $1.2B. Pure AGI infrastructure. Recently IPO'd, still volatile. Most direct expression of the thesis.</div></div>
         <div class="action-item"><span class="action-badge badge-avoid">AVOID</span><div class="action-text"><strong style="color:#e8e8e8;">Infosys (INFY)</strong> — SALP betting against via puts. AI coding kills traditional IT outsourcing. If you hold legacy IT consultancies, reconsider.</div></div>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
 function runCalculator() {
@@ -468,16 +466,16 @@ function runCalculator() {
   const cash = total * (reservePct / 100);
   const investable = total - cash;
 
-  // get selected comparables
   const selectedComps = [];
   document.querySelectorAll(".comp-toggle:checked").forEach(cb => {
-    selectedComps.push({ ticker: cb.dataset.ticker, name: cb.dataset.name, pct: 0 });
+    selectedComps.push({ ticker: cb.dataset.ticker, name: cb.dataset.name });
   });
 
-  // total weight of SALP positions
-  const salpTotal = KNOWN_POSITIONS.reduce((s, p) => s + p.pct, 0);
   const compWeight = selectedComps.length > 0 ? Math.min(20, selectedComps.length * 5) : 0;
   const salpWeight = 100 - compWeight;
+  const salpTotal = KNOWN_POSITIONS.reduce((s, p) => s + p.pct, 0);
+  const salpDollars = investable * (salpWeight / 100);
+  const compDollars = investable * (compWeight / 100);
 
   let html = `
     <div class="calc-summary">
@@ -487,50 +485,37 @@ function runCalculator() {
     </div>
     <div class="calc-results">
       <div>
-        <div class="calc-col-title">SALP POSITIONS</div>
-  `;
+        <div class="calc-col-title">SALP POSITIONS</div>`;
 
-  const salpDollars = investable * (salpWeight / 100);
   KNOWN_POSITIONS.forEach(pos => {
-    const weight = pos.pct / salpTotal;
-    const amount = salpDollars * weight;
     const ticker = getTicker(pos.name);
+    const amount = salpDollars * (pos.pct / salpTotal);
     html += `
       <div class="calc-row">
         <span class="calc-ticker">${ticker}</span>
-        <span style="color:var(--text-dim);font-size:11px;">${pos.pct.toFixed(1)}%</span>
-        <span class="calc-amount">$${amount.toFixed(0)}</span>
-      </div>
-    `;
+        <span class="calc-pct">${pos.pct.toFixed(1)}%</span>
+        <span class="calc-amount">$${Math.round(amount).toLocaleString()}</span>
+      </div>`;
   });
 
-  html += `</div><div>`;
+  html += `</div><div><div class="calc-col-title">COMPARABLE PICKS</div>`;
 
   if (selectedComps.length > 0) {
-    html += `<div class="calc-col-title">COMPARABLE PICKS</div>`;
-    const compDollars = investable * (compWeight / 100);
     const perComp = compDollars / selectedComps.length;
     selectedComps.forEach(comp => {
       html += `
         <div class="calc-row">
           <span class="calc-ticker">${comp.ticker}</span>
-          <span style="color:var(--text-dim);font-size:11px;">equal weight</span>
-          <span class="calc-amount">$${perComp.toFixed(0)}</span>
-        </div>
-      `;
+          <span class="calc-pct">equal</span>
+          <span class="calc-amount">$${Math.round(perComp).toLocaleString()}</span>
+        </div>`;
     });
+    html += `<div style="height:1rem;"></div>`;
   } else {
-    html += `
-      <div class="calc-col-title">COMPARABLE PICKS</div>
-      <div style="color:var(--text-faint);font-family:var(--mono);font-size:12px;padding-top:8px;">Select comparables below to include them in your allocation.</div>
-    `;
+    html += `<div style="color:var(--text-faint);font-family:var(--mono);font-size:11px;padding:8px 0 16px;">Select stocks below to add to your allocation.</div>`;
   }
 
-  html += `
-      <div style="margin-top:1rem;">
-        <div class="calc-col-title">SELECT COMPARABLES</div>
-  `;
-
+  html += `<div class="calc-col-title" style="margin-top:0.5rem;">SELECT COMPARABLES</div>`;
   Object.values(COMPARABLES).flat().forEach(stock => {
     const checked = selectedComps.find(s => s.ticker === stock.ticker) ? "checked" : "";
     html += `
@@ -538,11 +523,10 @@ function runCalculator() {
         <input type="checkbox" class="comp-toggle" data-ticker="${stock.ticker}" data-name="${stock.name}" ${checked} onchange="runCalculator()">
         <span class="calc-ticker">${stock.ticker}</span>
         <span style="color:var(--text-dim);font-size:11px;">${stock.name.split("—")[0].trim()}</span>
-      </label>
-    `;
+      </label>`;
   });
 
-  html += `</div></div></div>`;
+  html += `</div></div>`;
   document.getElementById("calcResults").innerHTML = html;
 }
 
