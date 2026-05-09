@@ -1,0 +1,56 @@
+{
+  "CONSTELLATION ENERGY CORP": {
+    "name": "CONSTELLATION ENERGY CORP",
+    "value": 21565644000,
+    "shares": 96400,
+    "putCall": "",
+    "shType": "SH",
+    "cusip": "21037T109",
+    "pct": 8.46
+  },
+  "MODINE MFG CO": {
+    "name": "MODINE MFG CO",
+    "value": 7693926000,
+    "shares": 66367,
+    "putCall": "",
+    "shType": "SH",
+    "cusip": "607828100",
+    "pct": 3.02
+  },
+  "MARVELL TECHNOLOGY INC": {
+    "name": "MARVELL TECHNOLOGY INC",
+    "value": 86802213000,
+    "shares": 785896,
+    "putCall": "",
+    "shType": "SH",
+    "cusip": "573874104",
+    "pct": 34.06
+  },
+  "TALEN ENERGY CORP": {
+    "name": "TALEN ENERGY CORP",
+    "value": 27979751000,
+    "shares": 138878,
+    "putCall": "",
+    "shType": "SH",
+    "cusip": "87422Q109",
+    "pct": 10.98
+  },
+  "VERTIV HOLDINGS CO": {
+    "name": "VERTIV HOLDINGS CO",
+    "value": 51709137000,
+    "shares": 455146,
+    "putCall": "",
+    "shType": "SH",
+    "cusip": "92537N108",
+    "pct": 20.29
+  },
+  "VISTRA CORP": {
+    "name": "VISTRA CORP",
+    "value": 59063094000,
+    "shares": 428397,
+    "putCall": "",
+    "shType": "SH",
+    "cusip": "92840M102",
+    "pct": 23.18
+  }
+}
