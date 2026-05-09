@@ -398,9 +398,10 @@ def update_index_html(new_positions, changes, filing, aum_value, holdings_count)
         )
 
         # update filing date
+        filing_date = filing['date']
         html = re.sub(
             r'document\.getElementById\("statFiled"\)\.textContent = "[^"]*";',
-            f'document.getElementById("statFiled").textContent = "Filed {filing[\'date\']}";',
+            f'document.getElementById("statFiled").textContent = "Filed {filing_date}";',
             html
         )
 
