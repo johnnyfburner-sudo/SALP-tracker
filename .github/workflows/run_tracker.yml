@@ -45,10 +45,12 @@ jobs:
             seen_filings.json
             positions.json
           key: salp-data-${{ runner.os }}
-      - name: Commit updated index.html if changed
+      - name: Commit updated dashboard
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.test_mode == 'false')
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html positions.json
-          git diff --staged --quiet || git commit -m "Auto-update: new SALP filing detected"
-          git push
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html || true
+          git add positions.json || true
+          git diff --staged --quiet || git commit -m "Auto-update dashboard from new 13F filing"
+          git push || true
