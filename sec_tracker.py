@@ -58,7 +58,7 @@ def save_positions(positions):
         json.dump(positions, f, indent=2)
 
 def fetch_recent_filings():
-    url = f"https://data.sec.gov/submissions/CIK{CIK}.json"
+    url = f"https://data.sec.gov/submissions/CIK{CIK.zfill(10)}.json"
     headers = {
         "User-Agent": "Mozilla/5.0 (compatible; filing-tracker/1.0; +mailto:k.franzmeilinger@gmail.com)",
         "Accept-Encoding": "gzip, deflate",
