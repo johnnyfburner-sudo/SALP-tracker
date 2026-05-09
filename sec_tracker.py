@@ -58,7 +58,7 @@ def save_positions(positions):
         json.dump(positions, f, indent=2)
 
 def fetch_recent_filings():
-    url = f"https://efts.sec.gov/LATEST/search-index?q=%22{CIK}%22&dateRange=custom&startdt=2024-01-01&enddt=2099-01-01&forms=13F-HR,SC+13D,SC+13G"
+    url = f"https://data.sec.gov/submissions/CIK{CIK}.json"
     headers = {
         "User-Agent": "filing-tracker k.franzmeilinger@gmail.com",
         "Accept": "application/json",
@@ -67,15 +67,15 @@ def fetch_recent_filings():
         r = requests.get(url, headers=headers, timeout=15)
         r.raise_for_status()
         data = r.json()
+        recent = data.get("filings", {}).get("recent", {})
         filings = []
-        for hit in data.get("hits", {}).get("hits", []):
-            src = hit.get("_source", {})
-            form = src.get("form_type", "")
-            filed = src.get("file_date", "")
-            acc = src.get("accession_no", "").replace("-", "")
-            acc_fmt = f"{acc[:10]}-{acc[10:12]}-{acc[12:]}"
-            if any(form.startswith(t.replace("/", "")) or form == t for t in FORM_TYPES):
-                filings.append({"form": form, "date": filed, "accession": acc_fmt})
+        forms = recent.get("form", [])
+        dates = recent.get("filingDate", [])
+        accessions = recent.get("accessionNumber", [])
+        for form, date, acc in zip(forms, dates, accessions):
+            if any(form.startswith(t.replace("/", "")) or form == t for t in FORM_TYPES) or \
+               any(t in form for t in FORM_TYPES):
+                filings.append({"form": form, "date": date, "accession": acc})
         return filings
     except Exception as e:
         print(f"Error fetching filings: {e}")
