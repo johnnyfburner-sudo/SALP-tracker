@@ -313,8 +313,8 @@ async function fetchPrice(ticker) {
 
 async function loadPositions() {
   const totalValue = KNOWN_POSITIONS.reduce((s, p) => s + p.value, 0);
-  document.getElementById("statAum").textContent = fmt(totalValue);
-  document.getElementById("statHoldings").textContent = KNOWN_POSITIONS.length;
+  document.getElementById("statAum").textContent = "$5.5B";
+  document.getElementById("statHoldings").textContent = "29";
   document.getElementById("statFiled").textContent = "Filed 2026-02-11";
   const top = KNOWN_POSITIONS[0];
   document.getElementById("statTop").textContent = getTicker(top.name);
