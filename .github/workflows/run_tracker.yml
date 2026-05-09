@@ -14,6 +14,8 @@ on:
 jobs:
   track:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -22,20 +24,31 @@ jobs:
       - name: Restore seen filings cache
         uses: actions/cache@v3
         with:
-          path: seen_filings.json
-          key: seen-filings-${{ runner.os }}
-          restore-keys: seen-filings-
+          path: |
+            seen_filings.json
+            positions.json
+          key: salp-data-${{ runner.os }}
+          restore-keys: salp-data-
       - run: pip install requests anthropic
       - run: python sec_tracker.py
         env:
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
           ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
           TEST_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.test_mode || 'false' }}
       - name: Save seen filings cache
         uses: actions/cache@v3
         with:
-          path: seen_filings.json
-          key: seen-filings-${{ runner.os }}
+          path: |
+            seen_filings.json
+            positions.json
+          key: salp-data-${{ runner.os }}
+      - name: Commit updated index.html if changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html positions.json
+          git diff --staged --quiet || git commit -m "Auto-update: new SALP filing detected"
+          git push
