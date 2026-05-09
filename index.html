@@ -541,7 +541,20 @@ async function init() {
   loadAnalysis();
   runCalculator();
   document.getElementById("lastUpdate").textContent = "Updated " + new Date().toLocaleTimeString();
-  setInterval(refreshPrices, 30000);
+  function isTradingHours() {
+    const now = new Date();
+    const day = now.getDay(); // 0=Sun, 6=Sat
+    if (day === 0 || day === 6) return false;
+    const et = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+    const hour = et.getHours();
+    const min = et.getMinutes();
+    const minutes = hour * 60 + min;
+    return minutes >= 570 && minutes <= 960; // 9:30am to 4:00pm ET
+  }
+
+  setInterval(() => {
+    if (isTradingHours()) refreshPrices();
+  }, 30000);
 }
 
 init();
