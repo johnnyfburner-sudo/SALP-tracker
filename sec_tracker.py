@@ -126,6 +126,9 @@ def fetch_filing_data(accession):
             r'href="(/Archives/edgar/data/[^"]+\.xml)"', index_r.text, re.IGNORECASE
         )
         xml_links = [l for l in xml_links if not l.endswith(".txt") and "primary_doc" not in l]
+        # override for Q1 2026 filing
+        if "000204572426000008" in accession.replace("-", ""):
+            xml_links = ["/Archives/edgar/data/2045724/000204572426000008/xslForm13F_X02/salp13fq1xml.xml"]
 
         for link in xml_links:
             doc_url = f"https://www.sec.gov{link}"
