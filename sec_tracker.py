@@ -133,7 +133,12 @@ def fetch_filing_data(accession):
             doc_r = requests.get(doc_url, headers=sec_headers(), timeout=15)
 
             # parse infoTable entries for positions
-            entries = re.findall(r'<infoTable>(.*?)</infoTable>', doc_r.text, re.DOTALL)
+            entries = re.findall(r'<infoTable>(.*?)</infoTable>', doc_r.text, re.DOTALL | re.IGNORECASE)
+            if not entries:
+                # try namespace-prefixed version
+                entries = re.findall(r'<ns1:infoTable>(.*?)</ns1:infoTable>', doc_r.text, re.DOTALL | re.IGNORECASE)
+            if not entries:
+                entries = re.findall(r'<informationTable[^>]*>(.*?)</informationTable>', doc_r.text, re.DOTALL | re.IGNORECASE)
             for entry in entries:
                 def get_field(field, text):
                     m = re.search(rf'<{field}[^>]*>(.*?)</{field}>', text, re.DOTALL | re.IGNORECASE)
