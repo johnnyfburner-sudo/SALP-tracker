@@ -131,6 +131,8 @@ def fetch_filing_data(accession):
             doc_url = f"https://www.sec.gov{link}"
             time.sleep(0.5)
             doc_r = requests.get(doc_url, headers=sec_headers(), timeout=15)
+            print(f"Fetching {doc_url} — status {doc_r.status_code}")
+            print(f"First 200 chars: {doc_r.text[:200]}")
 
             # parse infoTable entries for positions
             entries = re.findall(r'<infoTable>(.*?)</infoTable>', doc_r.text, re.DOTALL | re.IGNORECASE)
