@@ -16,9 +16,6 @@ FORM_TYPES = ["13F-HR", "13F-HR/A", "SC 13D", "SC 13G", "SC 13D/A", "SC 13G/A"]
 STATE_FILE = "seen_filings.json"
 POSITIONS_FILE = "positions.json"
 
-# -------------------------------------------------------
-# EDIT THESE ANYTIME
-# -------------------------------------------------------
 SUMMARY_TOPICS = [
     "overall market outlook and macro themes",
     "any shifts in the fund's investment philosophy or AGI thesis",
@@ -38,7 +35,6 @@ ACTION_TOPICS = [
     "write like a knowledgeable friend giving real advice — clear, direct, no jargon",
     "use the live prices provided — do not guess or use outdated prices",
 ]
-# -------------------------------------------------------
 
 def load_seen():
     try:
@@ -89,24 +85,96 @@ def fetch_recent_filings():
         print(f"Error fetching filings: {e}")
         return []
 
+def parse_positions_from_html(html_text):
+    """Parse positions from SEC rendered HTML table"""
+    positions = {}
+    rows = re.findall(r'<tr[^>]*>(.*?)</tr>', html_text, re.DOTALL | re.IGNORECASE)
+    for row in rows:
+        cells = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL | re.IGNORECASE)
+        cells = [re.sub(r'<[^>]+>', '', c).strip() for c in cells]
+        cells = [re.sub(r'\s+', ' ', c) for c in cells]
+        if len(cells) < 5:
+            continue
+        name = cells[0]
+        if not name or name.lower() in ('name of issuer', 'issuer name', ''):
+            continue
+        # skip header rows
+        if name.lower().startswith('name') or name.lower().startswith('issuer'):
+            continue
+        try:
+            cusip = cells[1] if len(cells) > 1 else ""
+            value_str = cells[2].replace(',', '').replace('$', '').strip() if len(cells) > 2 else "0"
+            shares_str = cells[3].replace(',', '').strip() if len(cells) > 3 else "0"
+            share_type = cells[4].strip() if len(cells) > 4 else "SH"
+            put_call = cells[5].strip().upper() if len(cells) > 5 else ""
+            val_dollars = int(float(value_str)) * 1000
+            if val_dollars == 0:
+                continue
+            key = name.upper().strip()
+            if key not in positions:
+                positions[key] = {"name": name, "cusip": cusip, "holdings": [], "total_value": 0}
+            positions[key]["holdings"].append({
+                "value": val_dollars, "shares": shares_str,
+                "share_type": share_type, "put_call": put_call if put_call in ("PUT", "CALL") else ""
+            })
+            positions[key]["total_value"] += val_dollars
+        except (ValueError, IndexError):
+            continue
+    return positions
+
+def parse_positions_from_xml(xml_text):
+    """Parse positions from raw XML (handles ns1: namespace prefix)"""
+    positions = {}
+    # try ns1: prefixed tags first, then plain tags
+    entries = re.findall(r'<ns1:infoTable>(.*?)</ns1:infoTable>', xml_text, re.DOTALL | re.IGNORECASE)
+    if not entries:
+        entries = re.findall(r'<infoTable>(.*?)</infoTable>', xml_text, re.DOTALL | re.IGNORECASE)
+    
+    def get_field(field, text):
+        m = re.search(rf'<(?:ns1:)?{field}[^>]*>(.*?)</(?:ns1:)?{field}>', text, re.DOTALL | re.IGNORECASE)
+        return m.group(1).strip() if m else ""
+
+    for entry in entries:
+        name = get_field("nameOfIssuer", entry)
+        value = get_field("value", entry)
+        shares = get_field("sshPrnamt", entry)
+        share_type = get_field("sshPrnamtType", entry)
+        put_call = get_field("putCall", entry)
+        cusip = get_field("cusip", entry)
+        if not name or not value:
+            continue
+        key = name.upper().strip()
+        try:
+            val_dollars = int(value.replace(",", "")) * 1000
+        except:
+            continue
+        if key not in positions:
+            positions[key] = {"name": name, "cusip": cusip, "holdings": [], "total_value": 0}
+        positions[key]["holdings"].append({
+            "value": val_dollars, "shares": shares,
+            "share_type": share_type, "put_call": put_call,
+        })
+        positions[key]["total_value"] += val_dollars
+    return positions
+
 def fetch_filing_data(accession):
     acc_clean = accession.replace("-", "")
     cik_clean = CIK.lstrip("0")
-    index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_clean}/{accession}-index.html"
+    index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_clean}/{accession}-index.htm"
+    # also try .html extension
     headers = sec_headers()
-    headers["Accept"] = "text/html"
     combined_text = ""
     positions = {}
     aum_value = 0
     holdings_count = 0
+    filing_url = index_url
 
     try:
-        # fetch primary_doc.xml for AUM and holdings count
+        # fetch AUM from primary_doc.xml
         primary_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_clean}/primary_doc.xml"
         time.sleep(0.5)
-        primary_r = requests.get(primary_url, headers=sec_headers(), timeout=15)
+        primary_r = requests.get(primary_url, headers=headers, timeout=15)
         if primary_r.status_code == 200:
-            # table value total = AUM in dollars
             val_match = re.search(r'<tableValueTotal>\s*([\d]+)\s*</tableValueTotal>', primary_r.text)
             cnt_match = re.search(r'<tableEntryTotal>\s*([\d]+)\s*</tableEntryTotal>', primary_r.text)
             if val_match:
@@ -116,81 +184,77 @@ def fetch_filing_data(accession):
                 holdings_count = int(cnt_match.group(1))
                 print(f"Holdings count from filing: {holdings_count}")
 
-        # fetch index to find XML files
-        time.sleep(0.5)
-        index_r = requests.get(index_url, headers=headers, timeout=15)
-        index_r.raise_for_status()
+        # try .htm index first, then .html
+        for ext in [".htm", ".html", "-index.htm", "-index.html"]:
+            try:
+                test_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_clean}/{accession}{ext}"
+                time.sleep(0.3)
+                r = requests.get(test_url, headers=headers, timeout=15)
+                if r.status_code == 200:
+                    filing_url = test_url
+                    index_text = r.text
+                    break
+            except:
+                continue
+        else:
+            index_text = ""
 
-        # find all XML links
+        # find XML links from index
         xml_links = re.findall(
-            r'href="(/Archives/edgar/data/[^"]+\.xml)"', index_r.text, re.IGNORECASE
+            r'href="(/Archives/edgar/data/[^"]+\.xml)"', index_text, re.IGNORECASE
         )
-        xml_links = [l for l in xml_links if not l.endswith(".txt") and "primary_doc" not in l]
-        # override for Q1 2026 filing
-        if "000204572426000008" in accession.replace("-", ""):
-            xml_links = ["/Archives/edgar/data/2045724/000204572426000008/xslForm13F_X02/salp13fq1xml.xml"]
+        xml_links = [l for l in xml_links if "primary_doc" not in l and not l.endswith(".txt")]
+        
+        # also try direct URL patterns for the info table XML
+        direct_xml_urls = [
+            f"/Archives/edgar/data/{cik_clean}/{acc_clean}/salp13fq1xml.xml",
+            f"/Archives/edgar/data/{cik_clean}/{acc_clean}/SALP_13FQ425.xml",
+            f"/Archives/edgar/data/{cik_clean}/{acc_clean}/SALP_13F.xml",
+        ]
+        for url_path in direct_xml_urls:
+            if url_path not in xml_links:
+                xml_links.append(url_path)
+
+        print(f"Trying {len(xml_links)} XML links")
 
         for link in xml_links:
             doc_url = f"https://www.sec.gov{link}"
             time.sleep(0.5)
-            doc_r = requests.get(doc_url, headers=sec_headers(), timeout=15)
-            print(f"Fetching {doc_url} — status {doc_r.status_code}")
-            print(f"First 200 chars: {doc_r.text[:200]}")
+            doc_r = requests.get(doc_url, headers=headers, timeout=15)
+            print(f"Fetching {doc_url} — status {doc_r.status_code}, length {len(doc_r.text)}")
+            
+            if doc_r.status_code != 200:
+                continue
 
-            # parse infoTable entries for positions
-            entries = re.findall(r'<infoTable>(.*?)</infoTable>', doc_r.text, re.DOTALL | re.IGNORECASE)
-            if not entries:
-                # try namespace-prefixed version
-                entries = re.findall(r'<ns1:infoTable>(.*?)</ns1:infoTable>', doc_r.text, re.DOTALL | re.IGNORECASE)
-            if not entries:
-                entries = re.findall(r'<informationTable[^>]*>(.*?)</informationTable>', doc_r.text, re.DOTALL | re.IGNORECASE)
-            for entry in entries:
-                def get_field(field, text):
-                    m = re.search(rf'<{field}[^>]*>(.*?)</{field}>', text, re.DOTALL | re.IGNORECASE)
-                    return m.group(1).strip() if m else ""
+            content = doc_r.text
+            
+            # detect if it's HTML or XML
+            is_html = content.strip().startswith('<!DOCTYPE') or '<html' in content[:200].lower()
+            
+            if is_html:
+                print("Detected HTML format — parsing as table")
+                parsed = parse_positions_from_html(content)
+            else:
+                print("Detected XML format — parsing as XML")
+                parsed = parse_positions_from_xml(content)
 
-                name = get_field("nameOfIssuer", entry)
-                value = get_field("value", entry)
-                shares = get_field("sshPrnamt", entry)
-                share_type = get_field("sshPrnamtType", entry)
-                put_call = get_field("putCall", entry)
-                cusip = get_field("cusip", entry)
+            if parsed:
+                positions.update(parsed)
+                print(f"Parsed {len(parsed)} positions from {doc_url}")
+                # get plain text for Claude
+                text = re.sub(r'<[^>]+>', ' ', content)
+                text = re.sub(r'\s+', ' ', text).strip()
+                combined_text += text[:8000] + "\n\n"
+                break  # stop after first successful parse
 
-                if not name or not value:
-                    continue
-
-                key = name.upper().strip()
-                # value in filing is in thousands of dollars
-                val_dollars = int(value.replace(",", "")) * 1000 if value else 0
-
-                if key not in positions:
-                    positions[key] = {
-                        "name": name,
-                        "cusip": cusip,
-                        "holdings": [],
-                        "total_value": 0,
-                    }
-
-                positions[key]["holdings"].append({
-                    "value": val_dollars,
-                    "shares": shares,
-                    "share_type": share_type,
-                    "put_call": put_call,
-                })
-                positions[key]["total_value"] += val_dollars
-
-            # grab plain text for Claude
-            text = re.sub(r'<[^>]+>', ' ', doc_r.text)
-            text = re.sub(r'\s+', ' ', text).strip()
-            combined_text += text + "\n\n"
-
-        combined_text = combined_text[:15000]
-        print(f"Parsed {len(positions)} unique positions from filing")
+        print(f"Total unique positions: {len(positions)}")
 
     except Exception as e:
         print(f"Could not fetch filing: {e}")
+        import traceback
+        traceback.print_exc()
 
-    return combined_text or None, positions, index_url, aum_value, holdings_count
+    return combined_text or None, positions, filing_url, aum_value, holdings_count
 
 def compute_changes(new_positions, prev_positions):
     total_new = sum(p["total_value"] for p in new_positions.values())
@@ -256,7 +320,7 @@ def fetch_prices(tickers):
     return prices
 
 def fmt_value(v):
-    if v >= 1e9:
+    if abs(v) >= 1e9:
         return f"${v/1e9:.2f}B"
     return f"${v/1e6:.0f}M"
 
@@ -344,8 +408,6 @@ def update_index_html(new_positions, changes, filing, aum_value, holdings_count)
             html = f.read()
 
         total_value = sum(p["total_value"] for p in new_positions.values())
-
-        # build positions array sorted by value descending
         sorted_positions = sorted(new_positions.items(), key=lambda x: -x[1]["total_value"])
 
         positions_js_list = []
@@ -354,66 +416,29 @@ def update_index_html(new_positions, changes, filing, aum_value, holdings_count)
             ch = changes.get(key, {})
             change_data = None
             if ch.get("status") in ("NEW", "INCREASED", "DECREASED", "EXITED"):
-                change_data = {
-                    "status": ch["status"],
-                    "delta": ch.get("delta", 0),
-                    "delta_pct": ch.get("delta_pct", 0),
-                }
-            entry = {
-                "key": key,
-                "name": pos["name"],
-                "value": pos["total_value"],
-                "pct": pct,
-                "holdings": pos["holdings"],
-            }
+                change_data = {"status": ch["status"], "delta": ch.get("delta", 0), "delta_pct": ch.get("delta_pct", 0)}
+            entry = {"key": key, "name": pos["name"], "value": pos["total_value"], "pct": pct, "holdings": pos["holdings"]}
             if change_data:
                 entry["change"] = change_data
             positions_js_list.append(entry)
 
-        # add exited positions at the bottom
         for key, ch in changes.items():
             if ch["status"] == "EXITED":
                 positions_js_list.append({
-                    "key": key,
-                    "name": key,
-                    "value": 0,
-                    "pct": 0,
-                    "holdings": [],
+                    "key": key, "name": key, "value": 0, "pct": 0, "holdings": [],
                     "change": {"status": "EXITED", "delta": -ch["prev_value"], "delta_pct": -100, "prev_value": ch["prev_value"]},
                 })
 
         positions_json = json.dumps(positions_js_list)
+        html = re.sub(r'const KNOWN_POSITIONS = \[.*?\];', f'const KNOWN_POSITIONS = {positions_json};', html, flags=re.DOTALL)
 
-        # replace KNOWN_POSITIONS
-        html = re.sub(
-            r'const KNOWN_POSITIONS = \[.*?\];',
-            f'const KNOWN_POSITIONS = {positions_json};',
-            html, flags=re.DOTALL
-        )
-
-        # replace AUM stat — hardcoded from filing's tableValueTotal
         aum_str = fmt_aum(aum_value) if aum_value else fmt_value(total_value)
-        html = re.sub(
-            r'document\.getElementById\("statAum"\)\.textContent = "[^"]*";',
-            f'document.getElementById("statAum").textContent = "{aum_str}";',
-            html
-        )
-
-        # replace holdings count — from filing's tableEntryTotal
         count_str = str(holdings_count) if holdings_count else str(len(new_positions))
-        html = re.sub(
-            r'document\.getElementById\("statHoldings"\)\.textContent = "[^"]*";',
-            f'document.getElementById("statHoldings").textContent = "{count_str}";',
-            html
-        )
-
-        # update filing date
         filing_date = filing['date']
-        html = re.sub(
-            r'document\.getElementById\("statFiled"\)\.textContent = "[^"]*";',
-            f'document.getElementById("statFiled").textContent = "Filed {filing_date}";',
-            html
-        )
+
+        html = re.sub(r'document\.getElementById\("statAum"\)\.textContent = "[^"]*";', f'document.getElementById("statAum").textContent = "{aum_str}";', html)
+        html = re.sub(r'document\.getElementById\("statHoldings"\)\.textContent = "[^"]*";', f'document.getElementById("statHoldings").textContent = "{count_str}";', html)
+        html = re.sub(r'document\.getElementById\("statFiled"\)\.textContent = "[^"]*";', f'document.getElementById("statFiled").textContent = "Filed {filing_date}";', html)
 
         with open("index.html", "w") as f:
             f.write(html)
@@ -456,7 +481,7 @@ def send_alert(filing, summary, filing_url, new_positions, changes, aum_value, h
         indicator = change_indicator_text(ch)
         badges = ""
         for h in pos["holdings"]:
-            if h["put_call"] in ("PUT", "CALL"):
+            if h.get("put_call") in ("PUT", "CALL"):
                 badges += f' [{h["put_call"]}]'
         indicator_html = ""
         if indicator:
@@ -485,7 +510,6 @@ def send_alert(filing, summary, filing_url, new_positions, changes, aum_value, h
 <tr><td align="center" style="padding:2rem 1rem;">
 <table width="600" cellpadding="0" cellspacing="0" style="background:#0a0a0a;border-radius:8px;font-family:monospace;color:#e0e0e0;">
 <tr><td style="padding:2rem;">
-
   <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid #f5a623;padding-bottom:1rem;margin-bottom:1.5rem;">
   <tr>
     <td>
@@ -514,14 +538,11 @@ def send_alert(filing, summary, filing_url, new_positions, changes, aum_value, h
     </tr></table>
   </td></tr>
   </table>
-
   <p style="font-size:10px;color:#f5a623;letter-spacing:2px;margin:0 0 10px;">01 / MACRO & PHILOSOPHY</p>
   <div style="border-left:2px solid #f5a623;padding-left:1rem;margin-bottom:1.5rem;">
     <p style="font-size:13px;line-height:1.7;color:#cccccc;margin:0;">{section1}</p>
   </div>
-
   <div style="border-top:0.5px solid #222222;margin:1.5rem 0;"></div>
-
   <p style="font-size:10px;color:#f5a623;letter-spacing:2px;margin:0 0 10px;">02 / POSITION CHANGES</p>
   <div style="margin-bottom:1rem;">{to_bullets(section2)}</div>
   <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:1.5rem;">
@@ -532,19 +553,14 @@ def send_alert(filing, summary, filing_url, new_positions, changes, aum_value, h
     </tr>
     {pos_rows}
   </table>
-
   <div style="border-top:0.5px solid #222222;margin:1.5rem 0;"></div>
-
   <p style="font-size:10px;color:#f5a623;letter-spacing:2px;margin:0 0 10px;">03 / WHAT TO DO</p>
   <div style="margin-bottom:1.5rem;">{to_bullets(section3)}</div>
-
   <div style="border-top:0.5px solid #222222;margin:1.5rem 0;"></div>
-
   <table width="100%" cellpadding="0" cellspacing="0"><tr>
     <td><p style="font-size:11px;color:#444444;margin:0;">Generated by SEC Filing Tracker</p></td>
     <td align="right"><a href="{filing_url}" style="font-size:11px;color:#f5a623;text-decoration:none;letter-spacing:1px;">VIEW FULL FILING ↗</a></td>
   </tr></table>
-
 </td></tr>
 </table>
 </td></tr>
@@ -568,8 +584,6 @@ def main():
     seen = load_seen()
     prev_positions = load_previous_positions()
     filings = fetch_recent_filings()
-
-    # only process most recent filing
     new_filings = [f for f in filings if f["accession"] not in seen][:1]
 
     if not new_filings:
@@ -587,7 +601,6 @@ def main():
         total_value = sum(p["total_value"] for p in new_positions.values())
         changes = compute_changes(new_positions, prev_positions)
 
-        # fetch live prices
         raw_tickers = extract_tickers_from_filing(filing_text or "")
         prices = fetch_prices(raw_tickers)
         prices = {k: v for k, v in prices.items() if v}
@@ -600,11 +613,8 @@ def main():
             summary = "Could not retrieve filing text for summarization."
 
         if os.environ.get("TEST_MODE") == "true":
-            print("TEST MODE — no email sent. Summary:")
-            print(summary)
-            print(f"\nAUM from filing: ${aum_value:,}")
-            print(f"Holdings from filing: {holdings_count}")
-            print(f"Positions parsed: {len(new_positions)}")
+            print("TEST MODE — no email sent.")
+            print(f"AUM: ${aum_value:,} | Holdings: {holdings_count} | Positions: {len(new_positions)}")
             for k, v in sorted(new_positions.items(), key=lambda x: -x[1]["total_value"])[:5]:
                 print(f"  {k}: {fmt_value(v['total_value'])}")
         else:
