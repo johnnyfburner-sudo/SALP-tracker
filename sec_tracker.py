@@ -276,7 +276,8 @@ def compute_changes(new_positions, prev_positions):
             changes[key] = {"status": status, "pct": pct, "value": pos["total_value"], "prev_value": prev_val, "delta": delta, "delta_pct": delta_pct}
     for key in prev_positions:
         if key not in new_positions:
-            changes[key] = {"status": "EXITED", "pct": 0, "value": 0, "prev_value": prev_positions[key]["total_value"], "delta": -prev_positions[key]["total_value"], "exited_date": str(date.today())}
+            prev_val = prev_positions[key].get("total_value", 0) if isinstance(prev_positions[key], dict) else 0
+            changes[key] = {"status": "EXITED", "pct": 0, "value": 0, "prev_value": prev_val, "delta": -prev_val, "exited_date": str(date.today())}
     return changes
 
 def extract_tickers_from_filing(filing_text):
