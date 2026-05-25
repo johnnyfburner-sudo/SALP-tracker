@@ -42,8 +42,6 @@
   .card-label span { color: var(--text-faint); font-size: 10px; }
   .stat-val { font-family: var(--mono); font-size: 28px; color: #fff; font-weight: 500; }
   .stat-sub { font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: 4px; }
-
-  /* position table */
   .pos-header { display: grid; grid-template-columns: 1fr 90px 90px 55px; gap: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--border-dim); margin-bottom: 4px; }
   .pos-header div { font-family: var(--mono); font-size: 10px; color: var(--text-faint); letter-spacing: 1px; text-align: right; }
   .pos-header div:first-child { text-align: left; }
@@ -66,8 +64,6 @@
   .ind-down { color: var(--red); }
   .price-up { color: var(--green); }
   .price-down { color: var(--red); }
-
-  /* news */
   .news-item { padding: 10px 0; border-bottom: 0.5px solid var(--border-dim); display: flex; flex-direction: column; gap: 4px; }
   .news-item:last-child { border-bottom: none; }
   .news-headline { font-size: 13px; color: var(--text); line-height: 1.4; }
@@ -75,8 +71,6 @@
   .news-headline a:hover { color: var(--amber); }
   .news-meta { font-family: var(--mono); font-size: 10px; color: var(--text-faint); display: flex; gap: 12px; }
   .news-source { color: var(--amber); }
-
-  /* analysis */
   .summary-text { font-size: 13px; line-height: 1.8; color: #bbb; border-left: 2px solid var(--amber); padding-left: 1rem; }
   .summary-section { margin-bottom: 1.5rem; }
   .summary-section-title { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 2px; margin-bottom: 8px; }
@@ -92,8 +86,6 @@
   .action-text { font-size: 12px; color: #bbb; line-height: 1.6; }
   .sec-link { color: var(--amber); text-decoration: none; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
   .sec-link:hover { text-decoration: underline; }
-
-  /* comparables */
   .comparables-section { max-width: 1200px; margin: 0 auto; padding: 0 2rem 2rem; }
   .comparables-header { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 3px; text-transform: uppercase; padding: 1.5rem 0 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   .category-block { margin-bottom: 1.5rem; }
@@ -106,8 +98,6 @@
   .comp-price { font-family: var(--mono); font-size: 16px; color: #fff; font-weight: 500; margin-top: 4px; }
   .comp-change { font-family: var(--mono); font-size: 11px; }
   .refresh-note { font-family: var(--mono); font-size: 10px; color: var(--text-faint); }
-
-  /* calculator */
   .calculator-section { max-width: 1200px; margin: 0 auto; padding: 0 2rem 3rem; }
   .calc-header { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 3px; text-transform: uppercase; padding: 1.5rem 0 1rem; border-top: 1px solid var(--border); }
   .calc-inputs { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: flex-end; }
@@ -131,10 +121,8 @@
   .calc-toggle { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--border-dim); font-family: var(--mono); font-size: 12px; cursor: pointer; }
   .calc-toggle:last-child { border-bottom: none; }
   .calc-toggle input { accent-color: var(--amber); cursor: pointer; width: 14px; height: 14px; }
-
   .loading { color: var(--text-faint); font-family: var(--mono); font-size: 12px; }
   .error-msg { color: var(--red); font-family: var(--mono); font-size: 11px; }
-
   @media (max-width: 900px) {
     .main { grid-template-columns: 1fr; padding: 1rem; }
     .card.span2, .card.span3 { grid-column: span 1; }
@@ -161,18 +149,18 @@
 <div class="main">
   <div class="card accent">
     <div class="card-label">Total AUM (Disclosed)</div>
-    <div class="stat-val" id="statAum">—</div>
-    <div class="stat-sub">Latest 13F disclosed longs</div>
+    <div class="stat-val" id="statAum">$13.7B</div>
+    <div class="stat-sub">Q1 2026 13F disclosed longs</div>
   </div>
   <div class="card accent">
     <div class="card-label">Holdings</div>
-    <div class="stat-val" id="statHoldings">—</div>
-    <div class="stat-sub" id="statFiled">Loading...</div>
+    <div class="stat-val" id="statHoldings">42</div>
+    <div class="stat-sub" id="statFiled">Filed 2026-05-18</div>
   </div>
   <div class="card accent">
     <div class="card-label">Top Position</div>
-    <div class="stat-val" id="statTop">—</div>
-    <div class="stat-sub" id="statTopPct">of portfolio</div>
+    <div class="stat-val" id="statTop">SMH</div>
+    <div class="stat-sub" id="statTopPct">14.9% of portfolio (PUT)</div>
   </div>
 
   <div class="card span2">
@@ -200,7 +188,7 @@
 <div class="comparables-section">
   <div class="comparables-header">
     Comparable Universe — AI Infrastructure
-    <span class="refresh-note" id="compRefreshTime">Refreshes every 30s</span>
+    <span class="refresh-note" id="compRefreshTime">Refreshes during market hours</span>
   </div>
   <div class="category-block">
     <div class="category-title">GPU Cloud / Compute</div>
@@ -238,19 +226,54 @@
 
 <script>
 const FINNHUB_KEY = "d7t8bn1r01qugn09og2gd7t8bn1r01qugn09og30";
-const FILING_INDEX = "https://www.sec.gov/Archives/edgar/data/2045724/000204572426000002/0002045724-26-000002-index.html";
+const FILING_INDEX = "https://www.sec.gov/Archives/edgar/data/2045724/000204572426000008/0002045724-26-000008-index.htm";
 
-// AUTO-UPDATED BY sec_tracker.py
+// Q1 2026 positions from 13F filed 2026-05-18
 const KNOWN_POSITIONS = [
-  {"key":"COREWEAVE INC","name":"COREWEAVE INC","value":1200000000,"pct":21.7,"holdings":[{"value":1200000000,"shares":"","share_type":"SH","put_call":""}]},
-  {"key":"BLOOM ENERGY CORP","name":"BLOOM ENERGY CORP","value":911000000,"pct":16.5,"holdings":[{"value":456000000,"shares":"","share_type":"SH","put_call":""},{"value":455000000,"shares":"","share_type":"SH","put_call":"CALL"}]},
-  {"key":"INTEL CORP","name":"INTEL CORP","value":747000000,"pct":13.5,"holdings":[{"value":1,"shares":"1","share_type":"SH","put_call":""},{"value":746999999,"shares":"","share_type":"SH","put_call":"CALL"}]},
-  {"key":"CORE SCIENTIFIC INC NEW","name":"CORE SCIENTIFIC INC NEW","value":650000000,"pct":11.8,"holdings":[{"value":650000000,"shares":"","share_type":"SH","put_call":""}]},
-  {"key":"IREN LIMITED","name":"IREN LIMITED","value":329000000,"pct":5.9,"holdings":[{"value":329000000,"shares":"","share_type":"SH","put_call":""}]},
-  {"key":"APPLIED DIGITAL CORP","name":"APPLIED DIGITAL CORP","value":280000000,"pct":5.0,"holdings":[{"value":280000000,"shares":"","share_type":"SH","put_call":""}]},
-  {"key":"RIOT PLATFORMS INC","name":"RIOT PLATFORMS INC","value":78000000,"pct":1.4,"holdings":[{"value":78000000,"shares":"","share_type":"SH","put_call":""}]},
-  {"key":"INFOSYS LTD","name":"INFOSYS LTD","value":8900000,"pct":0.16,"holdings":[{"value":8900000,"shares":"","share_type":"SH","put_call":"PUT"}]}
+  {"key":"VANECK SMH PUT","name":"VanEck Semiconductor ETF","value":2042716860,"pct":14.93,"holdings":[{"value":2042716860,"put_call":"PUT"},{"value":10332630,"put_call":""}]},
+  {"key":"SANDISK","name":"SanDisk Corp","value":1113127751,"pct":8.14,"holdings":[{"value":724363205,"put_call":""},{"value":388764546,"put_call":"CALL"}]},
+  {"key":"ORACLE PUT","name":"Oracle Corp","value":1072873230,"pct":7.84,"holdings":[{"value":1072873230,"put_call":"PUT"}]},
+  {"key":"BROADCOM PUT","name":"Broadcom Inc","value":1006247961,"pct":7.36,"holdings":[{"value":1006247961,"put_call":"PUT"}]},
+  {"key":"BLOOM ENERGY","name":"Bloom Energy Corp","value":934055595,"pct":6.83,"holdings":[{"value":878707930,"put_call":""},{"value":55347665,"put_call":"CALL"}]},
+  {"key":"AMD PUT","name":"Advanced Micro Devices","value":989328506,"pct":7.23,"holdings":[{"value":969160863,"put_call":"PUT"},{"value":20167643,"put_call":""}]},
+  {"key":"NVIDIA PUT","name":"Nvidia Corporation","value":1568755032,"pct":11.47,"holdings":[{"value":1568257120,"put_call":"PUT"},{"value":497912,"put_call":""}]},
+  {"key":"MICRON","name":"Micron Technology","value":1011851746,"pct":7.40,"holdings":[{"value":583686168,"put_call":"PUT"},{"value":422300000,"put_call":"CALL"},{"value":5865578,"put_call":""}]},
+  {"key":"TAIWAN SEMI","name":"Taiwan Semiconductor","value":897535383,"pct":6.56,"holdings":[{"value":535110030,"put_call":"PUT"},{"value":354847500,"put_call":"CALL"},{"value":7577853,"put_call":""}]},
+  {"key":"ASML PUT","name":"ASML Holding NV","value":500241908,"pct":3.66,"holdings":[{"value":494122503,"put_call":"PUT"},{"value":6119405,"put_call":""}]},
+  {"key":"COREWEAVE","name":"CoreWeave Inc","value":696642700,"pct":5.09,"holdings":[{"value":556073385,"put_call":""},{"value":140569315,"put_call":"CALL"}]},
+  {"key":"IREN","name":"IREN Limited","value":401036064,"pct":2.93,"holdings":[{"value":401036064,"put_call":""}]},
+  {"key":"APPLIED DIGITAL","name":"Applied Digital Corp","value":319978118,"pct":2.34,"holdings":[{"value":319978118,"put_call":""}]},
+  {"key":"CORE SCIENTIFIC","name":"Core Scientific Inc","value":389086756,"pct":2.84,"holdings":[{"value":389086756,"put_call":""}]},
+  {"key":"RIOT PLATFORMS","name":"Riot Platforms Inc","value":142166413,"pct":1.04,"holdings":[{"value":142166413,"put_call":""}]},
+  {"key":"CLEANSPARK","name":"CleanSpark Inc","value":104469943,"pct":0.76,"holdings":[{"value":104469943,"put_call":""}]},
+  {"key":"SOLARIS ENERGY","name":"Solaris Energy Infras","value":62474687,"pct":0.46,"holdings":[{"value":62474687,"put_call":""}]},
+  {"key":"T1 ENERGY","name":"T1 Energy Inc","value":43900000,"pct":0.32,"holdings":[{"value":43900000,"put_call":""}]},
+  {"key":"BITFARMS","name":"Bitfarms Ltd","value":38757888,"pct":0.28,"holdings":[{"value":38757888,"put_call":""}]},
+  {"key":"SHARONAI","name":"SharonAI Holdings","value":18095535,"pct":0.13,"holdings":[{"value":18095535,"put_call":""}]},
+  {"key":"BABCOCK WILCOX","name":"Babcock & Wilcox","value":19888791,"pct":0.15,"holdings":[{"value":19888791,"put_call":""}]},
+  {"key":"BITDEER","name":"Bitdeer Technologies","value":29751243,"pct":0.22,"holdings":[{"value":29751243,"put_call":""}]},
+  {"key":"POWER SOLUTIONS","name":"Power Solutions Intl","value":26318424,"pct":0.19,"holdings":[{"value":26318424,"put_call":""}]},
+  {"key":"PROPETRO","name":"ProPetro Holding","value":13117423,"pct":0.10,"holdings":[{"value":13117423,"put_call":""}]},
+  {"key":"INFOSYS PUT","name":"Infosys Ltd","value":6755000,"pct":0.05,"holdings":[{"value":6755000,"put_call":"PUT"}]},
+  {"key":"INTEL PUT","name":"Intel Corp","value":167735743,"pct":1.23,"holdings":[{"value":159106302,"put_call":"PUT"},{"value":8929441,"put_call":""}]},
+  {"key":"HIVE DIGITAL","name":"Hive Digital Technologies","value":6443939,"pct":0.05,"holdings":[{"value":6443939,"put_call":""}]},
+  {"key":"CORNING PUT","name":"Corning Inc","value":21739292,"pct":0.16,"holdings":[{"value":21020962,"put_call":"PUT"},{"value":718330,"put_call":""}]},
+  {"key":"WHITEFIBER","name":"WhiteFiber Inc","value":20933016,"pct":0.15,"holdings":[{"value":20933016,"put_call":""}]},
+  {"key":"MICRON SMALL","name":"Micron Technology (shares)","value":5865578,"pct":0.04,"holdings":[{"value":5865578,"put_call":""}]},
+  {"key":"CORNING SMALL","name":"Corning Inc (shares)","value":718330,"pct":0.01,"holdings":[{"value":718330,"put_call":""}]},
 ];
+
+// Q4 2025 positions for change indicators
+const PREV_POSITIONS = {
+  "COREWEAVE INC": 1200000000,
+  "BLOOM ENERGY CORP": 911000000,
+  "INTEL CORP": 747000000,
+  "CORE SCIENTIFIC INC NEW": 650000000,
+  "IREN LIMITED": 329000000,
+  "APPLIED DIGITAL CORP": 280000000,
+  "RIOT PLATFORMS INC": 78000000,
+  "INFOSYS LTD": 8900000,
+};
 
 const COMPARABLES = {
   "cat-compute": [
@@ -277,29 +300,45 @@ const COMPARABLES = {
 };
 
 const TICKER_MAP = {
-  "COREWEAVE INC": "CRWV",
-  "BLOOM ENERGY CORP": "BE",
-  "CORE SCIENTIFIC INC NEW": "CORZ",
-  "INTEL CORP": "INTC",
-  "IREN LIMITED": "IREN",
-  "APPLIED DIGITAL CORP": "APLD",
-  "RIOT PLATFORMS INC": "RIOT",
-  "INFOSYS LTD": "INFY",
+  "VANECK SMH PUT": "SMH",
+  "SANDISK": "SNDK",
+  "ORACLE PUT": "ORCL",
+  "BROADCOM PUT": "AVGO",
+  "BLOOM ENERGY": "BE",
+  "AMD PUT": "AMD",
+  "NVIDIA PUT": "NVDA",
+  "MICRON": "MU",
+  "TAIWAN SEMI": "TSM",
+  "ASML PUT": "ASML",
+  "COREWEAVE": "CRWV",
+  "IREN": "IREN",
+  "APPLIED DIGITAL": "APLD",
+  "CORE SCIENTIFIC": "CORZ",
+  "RIOT PLATFORMS": "RIOT",
+  "CLEANSPARK": "CLSK",
+  "SOLARIS ENERGY": "SEI",
+  "T1 ENERGY": "TPVG",
+  "BITFARMS": "BITF",
+  "SHARONAI": "SHAI",
+  "BABCOCK WILCOX": "BW",
+  "BITDEER": "BTDR",
+  "POWER SOLUTIONS": "PSIX",
+  "PROPETRO": "PUMP",
+  "INFOSYS PUT": "INFY",
+  "INTEL PUT": "INTC",
+  "HIVE DIGITAL": "HIVE",
+  "CORNING PUT": "GLW",
+  "WHITEFIBER": "WFBR",
 };
 
 function fmt(n) {
-  if (n >= 1e9) return "$" + (n/1e9).toFixed(1) + "B";
-  if (n >= 1e6) return "$" + (n/1e6).toFixed(0) + "M";
+  if (Math.abs(n) >= 1e9) return "$" + (n/1e9).toFixed(1) + "B";
+  if (Math.abs(n) >= 1e6) return "$" + (n/1e6).toFixed(0) + "M";
   return "$" + n.toFixed(0);
 }
 
-function getTicker(name) {
-  const upper = name.toUpperCase().trim();
-  if (TICKER_MAP[upper]) return TICKER_MAP[upper];
-  for (const [k, v] of Object.entries(TICKER_MAP)) {
-    if (upper.includes(k)) return v;
-  }
-  return name.split(/\s+/)[0].replace(/[^A-Z]/gi, "").toUpperCase();
+function getTicker(key) {
+  return TICKER_MAP[key] || key.split(/\s+/)[0];
 }
 
 async function fetchPrice(ticker) {
@@ -311,16 +350,31 @@ async function fetchPrice(ticker) {
   } catch { return null; }
 }
 
+function getChangeIndicator(pos) {
+  const prevNames = {
+    "COREWEAVE": "COREWEAVE INC",
+    "BLOOM ENERGY": "BLOOM ENERGY CORP",
+    "CORE SCIENTIFIC": "CORE SCIENTIFIC INC NEW",
+    "IREN": "IREN LIMITED",
+    "APPLIED DIGITAL": "APPLIED DIGITAL CORP",
+    "RIOT PLATFORMS": "RIOT PLATFORMS INC",
+    "INFOSYS PUT": "INFOSYS LTD",
+    "INTEL PUT": "INTEL CORP",
+  };
+  const prevKey = prevNames[pos.key];
+  if (!prevKey) return '<div class="pos-indicator ind-new">🟢 NEW</div>';
+  const prevVal = PREV_POSITIONS[prevKey];
+  if (!prevVal) return '<div class="pos-indicator ind-new">🟢 NEW</div>';
+  const delta = pos.value - prevVal;
+  const deltaPct = (delta / prevVal * 100);
+  if (Math.abs(deltaPct) < 1) return '';
+  if (delta > 0) return `<div class="pos-indicator ind-up">▲ +${fmt(Math.abs(delta))} (${deltaPct.toFixed(1)}%)</div>`;
+  return `<div class="pos-indicator ind-down">▼ ${fmt(delta)} (${deltaPct.toFixed(1)}%)</div>`;
+}
+
 async function loadPositions() {
   const totalValue = KNOWN_POSITIONS.reduce((s, p) => s + p.value, 0);
-  document.getElementById("statAum").textContent = "$5.5B";
-  document.getElementById("statHoldings").textContent = "29";
-  document.getElementById("statFiled").textContent = "Filed 2026-02-11";
-  const top = KNOWN_POSITIONS[0];
-  document.getElementById("statTop").textContent = getTicker(top.name);
-  document.getElementById("statTopPct").textContent = top.pct.toFixed(1) + "% of portfolio";
-
-  const tickers = KNOWN_POSITIONS.map(p => getTicker(p.name));
+  const tickers = KNOWN_POSITIONS.map(p => getTicker(p.key));
   const priceResults = await Promise.all(tickers.map(t => fetchPrice(t)));
 
   let html = "";
@@ -331,23 +385,13 @@ async function loadPositions() {
     const changeStr = pd && !isNaN(pd.change) ? `${pd.change >= 0 ? "+" : ""}${pd.change.toFixed(2)}%` : "";
     const changeClass = pd && !isNaN(pd.change) ? (pd.change >= 0 ? "price-up" : "price-down") : "";
     const barPct = ((pos.value / KNOWN_POSITIONS[0].value) * 100).toFixed(0);
+    const indicator = getChangeIndicator(pos);
 
     let badges = "";
-    if (pos.holdings) {
-      const hasPut = pos.holdings.some(h => h.put_call === "PUT");
-      const hasCall = pos.holdings.some(h => h.put_call === "CALL");
-      if (hasCall) badges += '<span class="badge badge-call">CALL</span>';
-      if (hasPut) badges += '<span class="badge badge-put">PUT</span>';
-    }
-
-    let indicator = "";
-    if (pos.change) {
-      const s = pos.change.status;
-      if (s === "NEW") indicator = '<div class="pos-indicator ind-new">🟢 NEW</div>';
-      else if (s === "EXITED") indicator = '<div class="pos-indicator ind-exited">🔴 EXITED</div>';
-      else if (s === "INCREASED") indicator = `<div class="pos-indicator ind-up">▲ +${fmt(Math.abs(pos.change.delta))} (${pos.change.delta_pct > 0 ? "+" : ""}${pos.change.delta_pct.toFixed(1)}%)</div>`;
-      else if (s === "DECREASED") indicator = `<div class="pos-indicator ind-down">▼ -${fmt(Math.abs(pos.change.delta))} (${pos.change.delta_pct.toFixed(1)}%)</div>`;
-    }
+    const hasPut = pos.holdings.some(h => h.put_call === "PUT");
+    const hasCall = pos.holdings.some(h => h.put_call === "CALL");
+    if (hasCall) badges += '<span class="badge badge-call">CALL</span>';
+    if (hasPut) badges += '<span class="badge badge-put">PUT</span>';
 
     html += `
       <div class="position-row">
@@ -363,7 +407,7 @@ async function loadPositions() {
         <div class="pos-val">${fmt(pos.value)}</div>
         <div class="pos-pct">${pos.pct.toFixed(1)}%</div>
       </div>
-      <div class="pos-bar-wrap"><div class="pos-bar" style="width:${barPct}%"></div></div>
+      <div class="pos-bar-wrap"><div class="pos-bar" style="width:${Math.min(barPct,100)}%"></div></div>
     `;
   });
 
@@ -389,12 +433,11 @@ async function loadComparables() {
           <div class="comp-name">${stock.name}</div>
           <div class="comp-price">${priceStr}</div>
           <div class="comp-change ${changeClass}">${changeStr}</div>
-        </div>
-      `;
+        </div>`;
     });
     container.innerHTML = html;
   }
-  document.getElementById("compRefreshTime").textContent = "Updated " + new Date().toLocaleTimeString() + " · refreshes every 30s";
+  document.getElementById("compRefreshTime").textContent = "Updated " + new Date().toLocaleTimeString() + " · refreshes during market hours";
 }
 
 async function loadNews() {
@@ -431,31 +474,32 @@ async function loadNews() {
 
 function loadAnalysis() {
   const el = document.getElementById("filingAnalysis");
-  document.getElementById("filingBadge").innerHTML = `<span class="filing-badge">13F-HR — Q4 2025</span> &nbsp; <a class="sec-link" href="${FILING_INDEX}" target="_blank">VIEW FULL FILING ↗</a>`;
+  document.getElementById("filingBadge").innerHTML = `<span class="filing-badge">13F-HR — Q1 2026</span> &nbsp; <a class="sec-link" href="${FILING_INDEX}" target="_blank">VIEW FULL FILING ↗</a>`;
   el.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
       <div class="summary-section" style="grid-column:span 2;">
         <div class="summary-section-title">01 / Macro & Philosophy</div>
-        <div class="summary-text">Situational Awareness LP continues to concentrate around the AGI transition thesis, with no meaningful philosophical pivot in Q4. The fund is doubling down on AI infrastructure and compute as the core macro bet — reflecting Aschenbrenner's view that the race to AGI is accelerating faster than consensus expects. Nearly 80% of the portfolio is in data center operators and energy plays, reflecting conviction that AGI development will be bottlenecked by power and cooling, not chips. The fund is hunting for asymmetric bets where the market hasn't fully priced in AI infrastructure demand — notably absent are obvious plays like NVDA or MSFT.</div>
+        <div class="summary-text">This is a major strategic pivot. SALP has nearly tripled its AUM to $13.7B while making massive bearish bets against the semiconductor sector — $1.57B short on Nvidia, $2B short on the VanEck Semiconductor ETF, $1B short on Broadcom, and $1B short on Oracle. The fund remains long on AI infrastructure plays (Bloom Energy, CoreWeave, IREN) but is now actively betting that the chip and software layer is severely overvalued. Aschenbrenner appears to believe AGI infrastructure will win while the current semiconductor euphoria will deflate. This is a sophisticated two-sided strategy: long the physical picks-and-shovels, short the overpriced silicon.</div>
       </div>
       <div class="summary-section">
         <div class="summary-section-title">02 / Position Changes</div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Total AUM ~$5.5B across disclosed long positions</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>CoreWeave (CRWV) — largest new position, ~$1.2B</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Bloom Energy (BE) — $911M, 16% of portfolio</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Core Scientific (CORZ) — increased to 9.4% ownership</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Intel (INTC) — $747M in call options + 1 share</span></div>
-        <div class="bullet"><span class="bullet-arrow">▸</span><span>Infosys (INFY) — $8.9M in put options</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>AUM nearly tripled: $5.5B → $13.7B, 42 holdings</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>🟢 NEW: $1.57B Nvidia PUT — massive short against NVDA</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>🟢 NEW: $2.04B VanEck SMH PUT — broad semi short</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>🟢 NEW: $1.07B Oracle PUT, $1B Broadcom PUT</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>🟢 NEW: $1.1B SanDisk position (calls + shares)</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>🔴 EXITED: CORZ, INTC calls, MARA, CLBT, BTBT, CIFR, WULF</span></div>
+        <div class="bullet"><span class="bullet-arrow">▸</span><span>INTC flipped from CALL to PUT — now betting against Intel</span></div>
       </div>
     </div>
     <div style="border-top:0.5px solid rgba(255,255,255,0.06);padding-top:1rem;margin-top:0.5rem;">
       <div class="summary-section-title">03 / What To Do</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
-        <div class="action-item"><span class="action-badge badge-buy">BUY</span><div class="action-text"><strong style="color:#e8e8e8;">IREN Ltd (IREN)</strong> — SALP holds $329M. Bitcoin miner pivoting to AI GPU hosting. High-conviction bet at a fraction of CoreWeave's valuation.</div></div>
-        <div class="action-item"><span class="action-badge badge-buy">BUY</span><div class="action-text"><strong style="color:#e8e8e8;">Bloom Energy (BE)</strong> — $911M, 16% of portfolio. Data centers need off-grid power. The picks-and-shovels play most retail investors overlook.</div></div>
-        <div class="action-item"><span class="action-badge badge-watch">WATCH</span><div class="action-text"><strong style="color:#e8e8e8;">Intel (INTC)</strong> — $747M in calls + 1 share. Asymmetric upside — turnaround, foundry, or acquisition. Small speculative position only.</div></div>
-        <div class="action-item"><span class="action-badge badge-watch">WATCH</span><div class="action-text"><strong style="color:#e8e8e8;">CoreWeave (CRWV)</strong> — SALP's largest at $1.2B. Pure AGI infrastructure. Recently IPO'd, still volatile. Most direct expression of the thesis.</div></div>
-        <div class="action-item"><span class="action-badge badge-avoid">AVOID</span><div class="action-text"><strong style="color:#e8e8e8;">Infosys (INFY)</strong> — SALP betting against via puts. AI coding kills traditional IT outsourcing. If you hold legacy IT consultancies, reconsider.</div></div>
+        <div class="action-item"><span class="action-badge badge-avoid">AVOID</span><div class="action-text"><strong style="color:#e8e8e8;">Nvidia (NVDA)</strong> — SALP just placed a $1.57B bet against Nvidia. That's the single clearest signal in this filing. If the smart money is shorting it at scale, be very cautious adding here.</div></div>
+        <div class="action-item"><span class="action-badge badge-avoid">AVOID</span><div class="action-text"><strong style="color:#e8e8e8;">Semiconductor sector broadly</strong> — The $2B SMH put is a broad bet that the entire chip sector is overvalued. AMD, Broadcom, Oracle all have large puts against them. This is not a stock-specific call — it's a sector call.</div></div>
+        <div class="action-item"><span class="action-badge badge-buy">BUY</span><div class="action-text"><strong style="color:#e8e8e8;">Bloom Energy (BE)</strong> — Still the largest pure long at $934M. SALP is doubling down on off-grid power for AI data centers. The thesis hasn't changed — just the chip layer view has.</div></div>
+        <div class="action-item"><span class="action-badge badge-watch">WATCH</span><div class="action-text"><strong style="color:#e8e8e8;">SanDisk (SNDK)</strong> — Brand new $1.1B position in calls + shares. Storage for AI workloads is massively underappreciated. Worth researching before the market catches on.</div></div>
+        <div class="action-item"><span class="action-badge badge-watch">WATCH</span><div class="action-text"><strong style="color:#e8e8e8;">CoreWeave (CRWV)</strong> — Still held at $697M but reduced from $1.2B. Conviction remains but trimmed. Still the purest retail play on AI compute infrastructure.</div></div>
       </div>
     </div>`;
 }
@@ -484,11 +528,10 @@ function runCalculator() {
       <div class="calc-summary-item"><div class="calc-summary-label">INVESTABLE</div><div class="calc-summary-val">$${investable.toLocaleString()}</div></div>
     </div>
     <div class="calc-results">
-      <div>
-        <div class="calc-col-title">SALP POSITIONS</div>`;
+      <div><div class="calc-col-title">SALP POSITIONS</div>`;
 
   KNOWN_POSITIONS.forEach(pos => {
-    const ticker = getTicker(pos.name);
+    const ticker = getTicker(pos.key);
     const amount = salpDollars * (pos.pct / salpTotal);
     html += `
       <div class="calc-row">
@@ -503,12 +546,7 @@ function runCalculator() {
   if (selectedComps.length > 0) {
     const perComp = compDollars / selectedComps.length;
     selectedComps.forEach(comp => {
-      html += `
-        <div class="calc-row">
-          <span class="calc-ticker">${comp.ticker}</span>
-          <span class="calc-pct">equal</span>
-          <span class="calc-amount">$${Math.round(perComp).toLocaleString()}</span>
-        </div>`;
+      html += `<div class="calc-row"><span class="calc-ticker">${comp.ticker}</span><span class="calc-pct">equal</span><span class="calc-amount">$${Math.round(perComp).toLocaleString()}</span></div>`;
     });
     html += `<div style="height:1rem;"></div>`;
   } else {
@@ -530,6 +568,15 @@ function runCalculator() {
   document.getElementById("calcResults").innerHTML = html;
 }
 
+function isTradingHours() {
+  const now = new Date();
+  const day = now.getDay();
+  if (day === 0 || day === 6) return false;
+  const et = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const minutes = et.getHours() * 60 + et.getMinutes();
+  return minutes >= 570 && minutes <= 960;
+}
+
 async function refreshPrices() {
   await Promise.all([loadPositions(), loadComparables()]);
   document.getElementById("lastUpdate").textContent = "Updated " + new Date().toLocaleTimeString();
@@ -541,20 +588,7 @@ async function init() {
   loadAnalysis();
   runCalculator();
   document.getElementById("lastUpdate").textContent = "Updated " + new Date().toLocaleTimeString();
-  function isTradingHours() {
-    const now = new Date();
-    const day = now.getDay(); // 0=Sun, 6=Sat
-    if (day === 0 || day === 6) return false;
-    const et = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    const hour = et.getHours();
-    const min = et.getMinutes();
-    const minutes = hour * 60 + min;
-    return minutes >= 570 && minutes <= 960; // 9:30am to 4:00pm ET
-  }
-
-  setInterval(() => {
-    if (isTradingHours()) refreshPrices();
-  }, 30000);
+  setInterval(() => { if (isTradingHours()) refreshPrices(); }, 30000);
 }
 
 init();
