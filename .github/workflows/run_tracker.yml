@@ -18,33 +18,39 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Restore seen filings cache
-        uses: actions/cache@v3
+
+      - name: Restore filing state
+        id: cache-restore
+        uses: actions/cache/restore@v3
         with:
           path: |
             seen_filings.json
             positions.json
-          key: salp-data-${{ runner.os }}
-          restore-keys: salp-data-
+          key: filing-state-v2
+
       - run: pip install requests anthropic
+
       - run: python sec_tracker.py
         env:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
           TEST_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.test_mode || 'false' }}
-      - name: Save seen filings cache
-        uses: actions/cache@v3
+
+      - name: Save filing state
+        uses: actions/cache/save@v3
         with:
           path: |
             seen_filings.json
             positions.json
-          key: salp-data-${{ runner.os }}
+          key: filing-state-v2
+
       - name: Commit updated dashboard
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.test_mode == 'false')
         run: |
