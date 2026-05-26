@@ -1,23 +1,4 @@
 {
-  "ADVANCED MICRO DEVICES INC": {
-    "name": "ADVANCED MICRO DEVICES INC",
-    "cusip": "COM",
-    "holdings": [
-      {
-        "value": 7903107000,
-        "shares": "\u00c2",
-        "share_type": "969,160,863",
-        "put_call": ""
-      },
-      {
-        "value": 7903107000,
-        "shares": "\u00c2",
-        "share_type": "20,167,643",
-        "put_call": ""
-      }
-    ],
-    "total_value": 15806214000
-  },
   "APPLIED DIGITAL CORP": {
     "name": "APPLIED DIGITAL CORP",
     "cusip": "COM NEW",
@@ -25,7 +6,7 @@
       {
         "value": 38169207000,
         "shares": "\u00c2",
-        "share_type": "319,978,118",
+        "share_type": "278,033,751",
         "put_call": ""
       }
     ],
@@ -38,49 +19,17 @@
       {
         "value": 93712107000,
         "shares": "\u00c2",
-        "share_type": "55,347,665",
+        "share_type": "875,505,552",
         "put_call": ""
       },
       {
         "value": 93712107000,
         "shares": "\u00c2",
-        "share_type": "878,707,930",
+        "share_type": "35,494,565",
         "put_call": ""
       }
     ],
     "total_value": 187424214000
-  },
-  "CORNING INC": {
-    "name": "CORNING INC",
-    "cusip": "COM",
-    "holdings": [
-      {
-        "value": 219350105000,
-        "shares": "\u00c2",
-        "share_type": "718,330",
-        "put_call": ""
-      },
-      {
-        "value": 219350105000,
-        "shares": "\u00c2",
-        "share_type": "21,020,962",
-        "put_call": ""
-      }
-    ],
-    "total_value": 438700210000
-  },
-  "HIVE DIGITAL TECHNOLOGIES LT": {
-    "name": "HIVE DIGITAL TECHNOLOGIES LT",
-    "cusip": "COM NEW",
-    "holdings": [
-      {
-        "value": 433921103000,
-        "shares": "\u00c2",
-        "share_type": "6,443,939",
-        "put_call": ""
-      }
-    ],
-    "total_value": 433921103000
   },
   "INFOSYS LTD": {
     "name": "INFOSYS LTD",
@@ -89,7 +38,7 @@
       {
         "value": 456788108000,
         "shares": "\u00c2",
-        "share_type": "6,755,000",
+        "share_type": "8,910,000",
         "put_call": ""
       }
     ],
@@ -102,42 +51,17 @@
       {
         "value": 458140100000,
         "shares": "\u00c2",
-        "share_type": "8,929,441",
+        "share_type": "37",
         "put_call": ""
       },
       {
         "value": 458140100000,
         "shares": "\u00c2",
-        "share_type": "159,106,302",
+        "share_type": "746,760,060",
         "put_call": ""
       }
     ],
     "total_value": 916280200000
-  },
-  "MICRON TECHNOLOGY INC": {
-    "name": "MICRON TECHNOLOGY INC",
-    "cusip": "COM",
-    "holdings": [
-      {
-        "value": 595112103000,
-        "shares": "\u00c2",
-        "share_type": "5,865,578",
-        "put_call": ""
-      },
-      {
-        "value": 595112103000,
-        "shares": "\u00c2",
-        "share_type": "422,300,000",
-        "put_call": ""
-      },
-      {
-        "value": 595112103000,
-        "shares": "\u00c2",
-        "share_type": "583,686,168",
-        "put_call": ""
-      }
-    ],
-    "total_value": 1785336309000
   },
   "RIOT PLATFORMS INC": {
     "name": "RIOT PLATFORMS INC",
@@ -146,48 +70,10 @@
       {
         "value": 767292105000,
         "shares": "\u00c2",
-        "share_type": "142,166,413",
+        "share_type": "78,144,759",
         "put_call": ""
       }
     ],
     "total_value": 767292105000
-  },
-  "SHARONAI HOLDINGS INC": {
-    "name": "SHARONAI HOLDINGS INC",
-    "cusip": "COM CL A ADDED",
-    "holdings": [
-      {
-        "value": 778920306000,
-        "shares": "\u00c2",
-        "share_type": "18,095,535",
-        "put_call": ""
-      }
-    ],
-    "total_value": 778920306000
-  },
-  "TAIWAN SEMICONDUCTOR MANUFAC": {
-    "name": "TAIWAN SEMICONDUCTOR MANUFAC",
-    "cusip": "SPONSORED ADS",
-    "holdings": [
-      {
-        "value": 874039100000,
-        "shares": "\u00c2",
-        "share_type": "7,577,853",
-        "put_call": ""
-      },
-      {
-        "value": 874039100000,
-        "shares": "\u00c2",
-        "share_type": "354,847,500",
-        "put_call": ""
-      },
-      {
-        "value": 874039100000,
-        "shares": "\u00c2",
-        "share_type": "535,110,030",
-        "put_call": ""
-      }
-    ],
-    "total_value": 2622117300000
   }
 }
