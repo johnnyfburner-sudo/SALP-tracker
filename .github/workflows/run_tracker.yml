@@ -2,14 +2,13 @@ name: SEC Filing Tracker
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # 9am ET
-    - cron: '0 18 * * *'  # 1pm ET
+    - cron: '0 15 * * *'  # 10am ET
   workflow_dispatch:
     inputs:
       test_mode:
         description: 'Test mode (no email sent)'
         required: false
-        default: 'true'
+        default: false'
 
 jobs:
   track:
