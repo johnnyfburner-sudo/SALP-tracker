@@ -2,7 +2,7 @@ name: SEC Filing Tracker
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # 10am ET
+    - cron: '0 9 * * 1'  # weekly, not hourly
   workflow_dispatch:
     inputs:
       test_mode:
