@@ -5,8 +5,8 @@
     "holdings": [
       {
         "value": 38169207000,
-        "shares": "\u00c2",
-        "share_type": "278,033,751",
+        "shares": "",
+        "share_type": "469,022,807",
         "put_call": ""
       }
     ],
@@ -18,18 +18,31 @@
     "holdings": [
       {
         "value": 93712107000,
-        "shares": "\u00c2",
-        "share_type": "875,505,552",
+        "shares": "",
+        "share_type": "44,133,660",
         "put_call": ""
       },
       {
         "value": 93712107000,
-        "shares": "\u00c2",
-        "share_type": "35,494,565",
+        "shares": "",
+        "share_type": "1,898,778,982",
         "put_call": ""
       }
     ],
     "total_value": 187424214000
+  },
+  "HIVE DIGITAL TECHNOLOGIES LT": {
+    "name": "HIVE DIGITAL TECHNOLOGIES LT",
+    "cusip": "COM NEW",
+    "holdings": [
+      {
+        "value": 433921103000,
+        "shares": "",
+        "share_type": "33,246,763",
+        "put_call": ""
+      }
+    ],
+    "total_value": 433921103000
   },
   "INFOSYS LTD": {
     "name": "INFOSYS LTD",
@@ -37,31 +50,38 @@
     "holdings": [
       {
         "value": 456788108000,
-        "shares": "\u00c2",
-        "share_type": "8,910,000",
+        "shares": "",
+        "share_type": "5,245,000",
         "put_call": ""
       }
     ],
     "total_value": 456788108000
   },
-  "INTEL CORP": {
-    "name": "INTEL CORP",
-    "cusip": "COM",
+  "KEEL INFRASTRUCTURE CORP": {
+    "name": "KEEL INFRASTRUCTURE CORP",
+    "cusip": "SHSCOM",
     "holdings": [
       {
-        "value": 458140100000,
-        "shares": "\u00c2",
-        "share_type": "37",
-        "put_call": ""
-      },
-      {
-        "value": 458140100000,
-        "shares": "\u00c2",
-        "share_type": "746,760,060",
+        "value": 486917107000,
+        "shares": "",
+        "share_type": "151,830,996",
         "put_call": ""
       }
     ],
-    "total_value": 916280200000
+    "total_value": 486917107000
+  },
+  "MICRON TECHNOLOGY INC": {
+    "name": "MICRON TECHNOLOGY INC",
+    "cusip": "COM",
+    "holdings": [
+      {
+        "value": 595112103000,
+        "shares": "",
+        "share_type": "5,573,819,392",
+        "put_call": ""
+      }
+    ],
+    "total_value": 595112103000
   },
   "RIOT PLATFORMS INC": {
     "name": "RIOT PLATFORMS INC",
@@ -69,11 +89,69 @@
     "holdings": [
       {
         "value": 767292105000,
-        "shares": "\u00c2",
-        "share_type": "78,144,759",
+        "shares": "",
+        "share_type": "468,198,000",
         "put_call": ""
       }
     ],
     "total_value": 767292105000
+  },
+  "SHARONAI HOLDINGS INC": {
+    "name": "SHARONAI HOLDINGS INC",
+    "cusip": "COM CL A",
+    "holdings": [
+      {
+        "value": 778920306000,
+        "shares": "",
+        "share_type": "456,836,112",
+        "put_call": ""
+      }
+    ],
+    "total_value": 778920306000
+  },
+  "STMICROELECTRONICS": {
+    "name": "STMICROELECTRONICS",
+    "cusip": "NY REGISTRY",
+    "holdings": [
+      {
+        "value": 861012102000,
+        "shares": "",
+        "share_type": "584,344,203",
+        "put_call": ""
+      }
+    ],
+    "total_value": 861012102000
+  },
+  "TAIWAN SEMICONDUCTOR MANUFAC": {
+    "name": "TAIWAN SEMICONDUCTOR MANUFAC",
+    "cusip": "SPONSORED ADS",
+    "holdings": [
+      {
+        "value": 874039100000,
+        "shares": "",
+        "share_type": "1,265,099,645",
+        "put_call": ""
+      },
+      {
+        "value": 874039100000,
+        "shares": "",
+        "share_type": "23,878,500",
+        "put_call": ""
+      }
+    ],
+    "total_value": 1748078200000
+  },
+  "VISHAY INTERTECHNOLOGY INC": {
+    "name": "VISHAY INTERTECHNOLOGY INC",
+    "cusip": "COM",
+    "holdings": [
+      {
+        "value": 928298108000,
+        "shares": "",
+        "share_type": "20,167,500",
+        "put_call": ""
+      }
+    ],
+    "total_value": 928298108000
   }
 }

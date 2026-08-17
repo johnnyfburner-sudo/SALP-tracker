@@ -229,39 +229,7 @@ const FINNHUB_KEY = "d7t8bn1r01qugn09og2gd7t8bn1r01qugn09og30";
 const FILING_INDEX = "https://www.sec.gov/Archives/edgar/data/2045724/000204572426000008/0002045724-26-000008-index.htm";
 
 // Q1 2026 positions from 13F filed 2026-05-18
-const KNOWN_POSITIONS = [
-  {"key":"VANECK SMH PUT","name":"VanEck Semiconductor ETF","value":2042716860,"pct":14.93,"holdings":[{"value":2042716860,"put_call":"PUT"},{"value":10332630,"put_call":""}]},
-  {"key":"SANDISK","name":"SanDisk Corp","value":1113127751,"pct":8.14,"holdings":[{"value":724363205,"put_call":""},{"value":388764546,"put_call":"CALL"}]},
-  {"key":"ORACLE PUT","name":"Oracle Corp","value":1072873230,"pct":7.84,"holdings":[{"value":1072873230,"put_call":"PUT"}]},
-  {"key":"BROADCOM PUT","name":"Broadcom Inc","value":1006247961,"pct":7.36,"holdings":[{"value":1006247961,"put_call":"PUT"}]},
-  {"key":"BLOOM ENERGY","name":"Bloom Energy Corp","value":934055595,"pct":6.83,"holdings":[{"value":878707930,"put_call":""},{"value":55347665,"put_call":"CALL"}]},
-  {"key":"AMD PUT","name":"Advanced Micro Devices","value":989328506,"pct":7.23,"holdings":[{"value":969160863,"put_call":"PUT"},{"value":20167643,"put_call":""}]},
-  {"key":"NVIDIA PUT","name":"Nvidia Corporation","value":1568755032,"pct":11.47,"holdings":[{"value":1568257120,"put_call":"PUT"},{"value":497912,"put_call":""}]},
-  {"key":"MICRON","name":"Micron Technology","value":1011851746,"pct":7.40,"holdings":[{"value":583686168,"put_call":"PUT"},{"value":422300000,"put_call":"CALL"},{"value":5865578,"put_call":""}]},
-  {"key":"TAIWAN SEMI","name":"Taiwan Semiconductor","value":897535383,"pct":6.56,"holdings":[{"value":535110030,"put_call":"PUT"},{"value":354847500,"put_call":"CALL"},{"value":7577853,"put_call":""}]},
-  {"key":"ASML PUT","name":"ASML Holding NV","value":500241908,"pct":3.66,"holdings":[{"value":494122503,"put_call":"PUT"},{"value":6119405,"put_call":""}]},
-  {"key":"COREWEAVE","name":"CoreWeave Inc","value":696642700,"pct":5.09,"holdings":[{"value":556073385,"put_call":""},{"value":140569315,"put_call":"CALL"}]},
-  {"key":"IREN","name":"IREN Limited","value":401036064,"pct":2.93,"holdings":[{"value":401036064,"put_call":""}]},
-  {"key":"APPLIED DIGITAL","name":"Applied Digital Corp","value":319978118,"pct":2.34,"holdings":[{"value":319978118,"put_call":""}]},
-  {"key":"CORE SCIENTIFIC","name":"Core Scientific Inc","value":389086756,"pct":2.84,"holdings":[{"value":389086756,"put_call":""}]},
-  {"key":"RIOT PLATFORMS","name":"Riot Platforms Inc","value":142166413,"pct":1.04,"holdings":[{"value":142166413,"put_call":""}]},
-  {"key":"CLEANSPARK","name":"CleanSpark Inc","value":104469943,"pct":0.76,"holdings":[{"value":104469943,"put_call":""}]},
-  {"key":"SOLARIS ENERGY","name":"Solaris Energy Infras","value":62474687,"pct":0.46,"holdings":[{"value":62474687,"put_call":""}]},
-  {"key":"T1 ENERGY","name":"T1 Energy Inc","value":43900000,"pct":0.32,"holdings":[{"value":43900000,"put_call":""}]},
-  {"key":"BITFARMS","name":"Bitfarms Ltd","value":38757888,"pct":0.28,"holdings":[{"value":38757888,"put_call":""}]},
-  {"key":"SHARONAI","name":"SharonAI Holdings","value":18095535,"pct":0.13,"holdings":[{"value":18095535,"put_call":""}]},
-  {"key":"BABCOCK WILCOX","name":"Babcock & Wilcox","value":19888791,"pct":0.15,"holdings":[{"value":19888791,"put_call":""}]},
-  {"key":"BITDEER","name":"Bitdeer Technologies","value":29751243,"pct":0.22,"holdings":[{"value":29751243,"put_call":""}]},
-  {"key":"POWER SOLUTIONS","name":"Power Solutions Intl","value":26318424,"pct":0.19,"holdings":[{"value":26318424,"put_call":""}]},
-  {"key":"PROPETRO","name":"ProPetro Holding","value":13117423,"pct":0.10,"holdings":[{"value":13117423,"put_call":""}]},
-  {"key":"INFOSYS PUT","name":"Infosys Ltd","value":6755000,"pct":0.05,"holdings":[{"value":6755000,"put_call":"PUT"}]},
-  {"key":"INTEL PUT","name":"Intel Corp","value":167735743,"pct":1.23,"holdings":[{"value":159106302,"put_call":"PUT"},{"value":8929441,"put_call":""}]},
-  {"key":"HIVE DIGITAL","name":"Hive Digital Technologies","value":6443939,"pct":0.05,"holdings":[{"value":6443939,"put_call":""}]},
-  {"key":"CORNING PUT","name":"Corning Inc","value":21739292,"pct":0.16,"holdings":[{"value":21020962,"put_call":"PUT"},{"value":718330,"put_call":""}]},
-  {"key":"WHITEFIBER","name":"WhiteFiber Inc","value":20933016,"pct":0.15,"holdings":[{"value":20933016,"put_call":""}]},
-  {"key":"MICRON SMALL","name":"Micron Technology (shares)","value":5865578,"pct":0.04,"holdings":[{"value":5865578,"put_call":""}]},
-  {"key":"CORNING SMALL","name":"Corning Inc (shares)","value":718330,"pct":0.01,"holdings":[{"value":718330,"put_call":""}]},
-];
+const KNOWN_POSITIONS = [{"key": "TAIWAN SEMICONDUCTOR MANUFAC", "name": "TAIWAN SEMICONDUCTOR MANUFAC", "value": 1748078200000, "pct": 24.01, "holdings": [{"value": 874039100000, "shares": "", "share_type": "1,265,099,645", "put_call": ""}, {"value": 874039100000, "shares": "", "share_type": "23,878,500", "put_call": ""}], "change": {"status": "DECREASED", "delta": -874039100000, "delta_pct": -33.33333333333333}}, {"key": "VISHAY INTERTECHNOLOGY INC", "name": "VISHAY INTERTECHNOLOGY INC", "value": 928298108000, "pct": 12.75, "holdings": [{"value": 928298108000, "shares": "", "share_type": "20,167,500", "put_call": ""}], "change": {"status": "NEW", "delta": 928298108000, "delta_pct": 0}}, {"key": "STMICROELECTRONICS", "name": "STMICROELECTRONICS", "value": 861012102000, "pct": 11.82, "holdings": [{"value": 861012102000, "shares": "", "share_type": "584,344,203", "put_call": ""}], "change": {"status": "NEW", "delta": 861012102000, "delta_pct": 0}}, {"key": "SHARONAI HOLDINGS INC", "name": "SHARONAI HOLDINGS INC", "value": 778920306000, "pct": 10.7, "holdings": [{"value": 778920306000, "shares": "", "share_type": "456,836,112", "put_call": ""}]}, {"key": "RIOT PLATFORMS INC", "name": "RIOT PLATFORMS INC", "value": 767292105000, "pct": 10.54, "holdings": [{"value": 767292105000, "shares": "", "share_type": "468,198,000", "put_call": ""}]}, {"key": "MICRON TECHNOLOGY INC", "name": "MICRON TECHNOLOGY INC", "value": 595112103000, "pct": 8.17, "holdings": [{"value": 595112103000, "shares": "", "share_type": "5,573,819,392", "put_call": ""}], "change": {"status": "DECREASED", "delta": -1190224206000, "delta_pct": -66.66666666666666}}, {"key": "KEEL INFRASTRUCTURE CORP", "name": "KEEL INFRASTRUCTURE CORP", "value": 486917107000, "pct": 6.69, "holdings": [{"value": 486917107000, "shares": "", "share_type": "151,830,996", "put_call": ""}], "change": {"status": "NEW", "delta": 486917107000, "delta_pct": 0}}, {"key": "INFOSYS LTD", "name": "INFOSYS LTD", "value": 456788108000, "pct": 6.27, "holdings": [{"value": 456788108000, "shares": "", "share_type": "5,245,000", "put_call": ""}]}, {"key": "HIVE DIGITAL TECHNOLOGIES LT", "name": "HIVE DIGITAL TECHNOLOGIES LT", "value": 433921103000, "pct": 5.96, "holdings": [{"value": 433921103000, "shares": "", "share_type": "33,246,763", "put_call": ""}]}, {"key": "BLOOM ENERGY CORP", "name": "BLOOM ENERGY CORP", "value": 187424214000, "pct": 2.57, "holdings": [{"value": 93712107000, "shares": "", "share_type": "44,133,660", "put_call": ""}, {"value": 93712107000, "shares": "", "share_type": "1,898,778,982", "put_call": ""}]}, {"key": "APPLIED DIGITAL CORP", "name": "APPLIED DIGITAL CORP", "value": 38169207000, "pct": 0.52, "holdings": [{"value": 38169207000, "shares": "", "share_type": "469,022,807", "put_call": ""}]}, {"key": "ADVANCED MICRO DEVICES INC", "name": "ADVANCED MICRO DEVICES INC", "value": 0, "pct": 0, "holdings": [], "change": {"status": "EXITED", "delta": -15806214000, "delta_pct": -100, "prev_value": 15806214000}}, {"key": "CORNING INC", "name": "CORNING INC", "value": 0, "pct": 0, "holdings": [], "change": {"status": "EXITED", "delta": -438700210000, "delta_pct": -100, "prev_value": 438700210000}}, {"key": "INTEL CORP", "name": "INTEL CORP", "value": 0, "pct": 0, "holdings": [], "change": {"status": "EXITED", "delta": -916280200000, "delta_pct": -100, "prev_value": 916280200000}}];
 
 // Q4 2025 positions for change indicators
 const PREV_POSITIONS = {
