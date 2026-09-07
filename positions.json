@@ -1,4 +1,23 @@
 {
+  "ADVANCED MICRO DEVICES INC": {
+    "name": "ADVANCED MICRO DEVICES INC",
+    "cusip": "COM",
+    "holdings": [
+      {
+        "value": 7903107000,
+        "shares": "",
+        "share_type": "969,160,863",
+        "put_call": ""
+      },
+      {
+        "value": 7903107000,
+        "shares": "",
+        "share_type": "20,167,643",
+        "put_call": ""
+      }
+    ],
+    "total_value": 15806214000
+  },
   "APPLIED DIGITAL CORP": {
     "name": "APPLIED DIGITAL CORP",
     "cusip": "COM NEW",
@@ -6,7 +25,7 @@
       {
         "value": 38169207000,
         "shares": "",
-        "share_type": "469,022,807",
+        "share_type": "319,978,118",
         "put_call": ""
       }
     ],
@@ -19,17 +38,36 @@
       {
         "value": 93712107000,
         "shares": "",
-        "share_type": "44,133,660",
+        "share_type": "55,347,665",
         "put_call": ""
       },
       {
         "value": 93712107000,
         "shares": "",
-        "share_type": "1,898,778,982",
+        "share_type": "878,707,930",
         "put_call": ""
       }
     ],
     "total_value": 187424214000
+  },
+  "CORNING INC": {
+    "name": "CORNING INC",
+    "cusip": "COM",
+    "holdings": [
+      {
+        "value": 219350105000,
+        "shares": "",
+        "share_type": "718,330",
+        "put_call": ""
+      },
+      {
+        "value": 219350105000,
+        "shares": "",
+        "share_type": "21,020,962",
+        "put_call": ""
+      }
+    ],
+    "total_value": 438700210000
   },
   "HIVE DIGITAL TECHNOLOGIES LT": {
     "name": "HIVE DIGITAL TECHNOLOGIES LT",
@@ -38,7 +76,7 @@
       {
         "value": 433921103000,
         "shares": "",
-        "share_type": "33,246,763",
+        "share_type": "6,443,939",
         "put_call": ""
       }
     ],
@@ -51,24 +89,30 @@
       {
         "value": 456788108000,
         "shares": "",
-        "share_type": "5,245,000",
+        "share_type": "6,755,000",
         "put_call": ""
       }
     ],
     "total_value": 456788108000
   },
-  "KEEL INFRASTRUCTURE CORP": {
-    "name": "KEEL INFRASTRUCTURE CORP",
-    "cusip": "SHSCOM",
+  "INTEL CORP": {
+    "name": "INTEL CORP",
+    "cusip": "COM",
     "holdings": [
       {
-        "value": 486917107000,
+        "value": 458140100000,
         "shares": "",
-        "share_type": "151,830,996",
+        "share_type": "8,929,441",
+        "put_call": ""
+      },
+      {
+        "value": 458140100000,
+        "shares": "",
+        "share_type": "159,106,302",
         "put_call": ""
       }
     ],
-    "total_value": 486917107000
+    "total_value": 916280200000
   },
   "MICRON TECHNOLOGY INC": {
     "name": "MICRON TECHNOLOGY INC",
@@ -77,11 +121,23 @@
       {
         "value": 595112103000,
         "shares": "",
-        "share_type": "5,573,819,392",
+        "share_type": "5,865,578",
+        "put_call": ""
+      },
+      {
+        "value": 595112103000,
+        "shares": "",
+        "share_type": "422,300,000",
+        "put_call": ""
+      },
+      {
+        "value": 595112103000,
+        "shares": "",
+        "share_type": "583,686,168",
         "put_call": ""
       }
     ],
-    "total_value": 595112103000
+    "total_value": 1785336309000
   },
   "RIOT PLATFORMS INC": {
     "name": "RIOT PLATFORMS INC",
@@ -90,7 +146,7 @@
       {
         "value": 767292105000,
         "shares": "",
-        "share_type": "468,198,000",
+        "share_type": "142,166,413",
         "put_call": ""
       }
     ],
@@ -98,29 +154,16 @@
   },
   "SHARONAI HOLDINGS INC": {
     "name": "SHARONAI HOLDINGS INC",
-    "cusip": "COM CL A",
+    "cusip": "COM CL A ADDED",
     "holdings": [
       {
         "value": 778920306000,
         "shares": "",
-        "share_type": "456,836,112",
+        "share_type": "18,095,535",
         "put_call": ""
       }
     ],
     "total_value": 778920306000
-  },
-  "STMICROELECTRONICS": {
-    "name": "STMICROELECTRONICS",
-    "cusip": "NY REGISTRY",
-    "holdings": [
-      {
-        "value": 861012102000,
-        "shares": "",
-        "share_type": "584,344,203",
-        "put_call": ""
-      }
-    ],
-    "total_value": 861012102000
   },
   "TAIWAN SEMICONDUCTOR MANUFAC": {
     "name": "TAIWAN SEMICONDUCTOR MANUFAC",
@@ -129,29 +172,22 @@
       {
         "value": 874039100000,
         "shares": "",
-        "share_type": "1,265,099,645",
+        "share_type": "7,577,853",
         "put_call": ""
       },
       {
         "value": 874039100000,
         "shares": "",
-        "share_type": "23,878,500",
+        "share_type": "354,847,500",
         "put_call": ""
-      }
-    ],
-    "total_value": 1748078200000
-  },
-  "VISHAY INTERTECHNOLOGY INC": {
-    "name": "VISHAY INTERTECHNOLOGY INC",
-    "cusip": "COM",
-    "holdings": [
+      },
       {
-        "value": 928298108000,
+        "value": 874039100000,
         "shares": "",
-        "share_type": "20,167,500",
+        "share_type": "535,110,030",
         "put_call": ""
       }
     ],
-    "total_value": 928298108000
+    "total_value": 2622117300000
   }
 }
